@@ -10,7 +10,13 @@ export default class App extends React.Component {
 
         <Text>Hello World test</Text>
         <Text>What's up chumps?</Text>
+
+        <Image
+          source={{ uri: 'https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif' }} style={{ width: 100, height: 100 }}
+        />
+
         <Text>Hello World, from Leah</Text>
+
 
       </View>
     );
