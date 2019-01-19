@@ -6,6 +6,9 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Text>What's up chumps?</Text>
+        <Image
+          source={{ uri: 'https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif' }} style={{ width: 100, height: 100 }}
+        />
       </View>
     );
   }
