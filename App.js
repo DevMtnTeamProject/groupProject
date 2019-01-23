@@ -1,31 +1,30 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import { StyleSheet, Text, View } from "react-native";
 import NewReviewForm from "./components/NewReviewForm";
+import HomeScreen from "./views/HomeScreen";
+import FavoriteScreen from "./views/FavoriteScreen";
+
+// createStackNavigator is like <Route /> in Reactjs
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Favorites: FavoriteScreen
+  },
+  {
+    initialRouteName: "Home"
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <NewReviewForm />
-
-        {/* <Text>Blegh</Text>
-
-        <Text>Hello World test</Text>
-        <Text>What's up chumps?</Text>
-
-        <Image
-          source={{
-            uri: "https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif"
-          }}
-          style={{ width: 100, height: 100 }}
-        />
-
-        <Text>Hello World, from Leah</Text> */}
-      </View>
-    );
+    return <AppContainer />;
   }
 }
 
+// styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
