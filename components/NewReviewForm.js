@@ -8,6 +8,7 @@ import {
   Button,
   StyleSheet
 } from "react-native";
+import axios from "axios";
 
 // StyleSheet below component
 
@@ -26,10 +27,11 @@ export default class NewReviewForm extends Component {
     };
   }
 
-  // save to db & clear inputs
-  handleSave = () => {
-    console.log("saved review");
+  // axios.post & set to initial state
+  onReviewSave = () => {
+    console.log("review saved");
   };
+  // add componentDidMount that will populate the restaurant name and location if selected via map
 
   render() {
     return (
@@ -74,7 +76,7 @@ export default class NewReviewForm extends Component {
             onChangeText={text => this.setState({ avoid: text })}
           />
         </View>
-        <Button title="Save" onPress={this.handleSave} />
+        <Button title="Save" onPress={this.onReviewSave} />
         <View>
           {/* <Text>
             {this.state.restaurantName}
