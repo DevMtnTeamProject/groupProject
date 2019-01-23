@@ -76,13 +76,13 @@ export default class NewReviewForm extends Component {
         </View>
         <Button title="Save" onPress={this.handleSave} />
         <View>
-          <Text>
+          {/* <Text>
             {this.state.restaurantName}
             {this.state.location}
             {this.state.review}
             {this.state.order}
             {this.state.avoid}
-          </Text>
+          </Text> */}
         </View>
       </View>
     );
