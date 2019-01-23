@@ -1,11 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
+import NewReviewForm from "./components/NewReviewForm";
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Blegh</Text>
+        <NewReviewForm />
+
+        {/* <Text>Blegh</Text>
 
         <Text>Hello World test</Text>
         <Text>What's up chumps?</Text>
@@ -17,7 +20,7 @@ export default class App extends React.Component {
           style={{ width: 100, height: 100 }}
         />
 
-        <Text>Hello World, from Leah</Text>
+        <Text>Hello World, from Leah</Text> */}
       </View>
     );
   }
