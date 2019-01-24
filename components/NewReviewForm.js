@@ -8,6 +8,7 @@ import {
   Button,
   StyleSheet
 } from "react-native";
+
 import axios from "axios";
 
 // StyleSheet below component
@@ -16,7 +17,6 @@ export default class NewReviewForm extends Component {
   constructor(props) {
     super(props);
 
-    // switch state to redux once redux is set up
     this.state = {
       restaurantName: "",
       location: "",
@@ -26,12 +26,13 @@ export default class NewReviewForm extends Component {
       photos: []
     };
   }
+  // TODO: add function that will populate restaurant name & location if selected from map
 
-  // axios.post & set to initial state
-  onReviewSave = () => {
-    console.log("review saved");
+  // save to db & clear inputs
+  onSaveReview = () => {
+    // axios.post()
+    console.log("saved review");
   };
-  // add componentDidMount that will populate the restaurant name and location if selected via map
 
   render() {
     return (
@@ -76,7 +77,7 @@ export default class NewReviewForm extends Component {
             onChangeText={text => this.setState({ avoid: text })}
           />
         </View>
-        <Button title="Save" onPress={this.onReviewSave} />
+        <Button title="Save" onPress={this.handleSave} />
         <View>
           {/* <Text>
             {this.state.restaurantName}
