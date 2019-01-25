@@ -26,6 +26,7 @@ mongoose.connect(process.env.MONGO_STRING, {useNewUrlParser: true});
 app.post('/post-review/',(req,res,next) =>{
     const review = new Review ({
         _id: new mongoose.Types.ObjectId(),
+        restaurantId: req.body.restaurantId,
         authorId: req.body.auth0,
         userName: req.body.name,
         createdOn: Date.now(),
