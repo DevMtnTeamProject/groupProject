@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import MapView from "react-native-maps";
 import { StyleSheet } from "react-native";
+import mapstyles from "./mapstyles.json";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 // functionality of map
 /*
@@ -12,19 +13,27 @@ initial location rendered === user location
 
 
 */
+//ajksdlf;jaf/
 export default class Map extends Component {
+
   render() {
+    // console.log('hhhhh', mapstyles)
     return (
       <MapView
-        style={{ flex: 1 }}
+        region={this.props.region}
+        style={styles.map}
+        customMapStyle={mapstyles}
         showUserLocation={true}
-        region={{
-          latitude: 40.758701,
-          longitude: -111.876183,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }}
-      />
+        provider={PROVIDER_GOOGLE}
+      >
+        {this.props.markers.map(marker => (
+          <Marker
+          // coordinate={marker.latlng}
+          // title={marker.title}
+          // description={marker.description}
+          />
+        ))}
+      </MapView>
     );
   }
 }

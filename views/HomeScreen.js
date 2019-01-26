@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import Map from "../components/Map/Map";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -25,20 +24,7 @@ export default class HomeScreen extends React.Component {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>Home Screen</Text>
         <View style={styles.container}>
-          <MapView
-            region={this.state.region}
-            style={styles.map}
-            showUserLocation={true}
-            provider={PROVIDER_GOOGLE}
-          >
-            {this.state.markers.map(marker => (
-              <Marker
-              // coordinate={marker.latlng}
-              // title={marker.title}
-              // description={marker.description}
-              />
-            ))}
-          </MapView>
+          <Map region={this.state.region} markers={this.state.markers} />
         </View>
         <Button
           title="View Favorites"
