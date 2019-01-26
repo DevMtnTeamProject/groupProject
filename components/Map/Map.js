@@ -13,7 +13,7 @@ initial location rendered === user location
 
 
 */
-
+//ajksdlf;jaf/
 export default class Map extends Component {
 
   render() {
