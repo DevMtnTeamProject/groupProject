@@ -7,7 +7,9 @@ const reviewSchema = mongoose.Schema({
     userName: String,
     createdOn: String,
     info:{
-        text: String
+       review: String,
+       order: String,
+       avoid: String
     }
 })
 

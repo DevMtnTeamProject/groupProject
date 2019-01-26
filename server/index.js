@@ -3,9 +3,9 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const massive = require('massive')
 const mongoose = require('mongoose')
-const PORT = 4006 
+const PORT = 4006
 
-const Review = require('./tables')
+const Review = require('./reviewTable')
 
 require('dotenv').config()
 
@@ -21,26 +21,33 @@ app.use(
 
 app.use(bodyParser.json())
 
-mongoose.connect(process.env.MONGO_STRING, {useNewUrlParser: true});
+mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true });
 
-app.post('/post-review/',(req,res,next) =>{
-    const review = new Review ({
-        _id: new mongoose.Types.ObjectId(),
-        restaurantId: req.body.restaurantId,
-        authorId: req.body.auth0,
-        userName: req.body.name,
-        createdOn: Date.now(),
-        info:{
-            text: req.body.review,
-            avoid: req.body.avoid
-        }
-    })
-    review.save().then(result => {
-        console.log(result)
+app.get('/review/:id', (req, res, next) => {
+    const id = req.params.id
+    console.log(req.params)
+    Review.findById(id).exec().then(doc => {
+        console.log(doc)
+        res.status(200).send(doc)
     })
 })
 
-    
+app.post('/post-review/', (req, res, next) => {
+    console.log(req)
+    const review = new Review({
+        _id: new mongoose.Types.ObjectId(),
+        restaurantId: req.body.restaurantId,
+        authorId: req.body.authorId,
+        userName: req.body.userName,
+        createdOn: Date.now(),
+        info: req.body.info
+    })
+    review.save().then(result => {
+        res.status(200).send(result)
+    })
+})
+
+
 
 
 app.listen(PORT, () => {
