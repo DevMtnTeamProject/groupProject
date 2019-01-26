@@ -1,28 +1,55 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const app = express()
-const path = require('path')
+const session = require('express-session')
+const massive = require('massive')
 const mongoose = require('mongoose')
+const PORT = 4006
+
+const Review = require('./reviewTable')
 
 require('dotenv').config()
 
+const app = express()
 
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        saveUninitialized: false,
+        resave: false
+    })
+)
 
 app.use(bodyParser.json())
 
-mongoose.connect(
-    process.env.MONGO_STRING,
-    {
-        useMongoClient: true
-    }
-)
+mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true });
 
-const PORT = process.env.PORT || 3000
+app.get('/review/:id', (req, res, next) => {
+    const id = req.params.id
+    console.log(req.params)
+    Review.findById(id).exec().then(doc => {
+        console.log(doc)
+        res.status(200).send(doc)
+    })
+})
 
-app.listen(PORT, err => {
-    if (err) {
-        console.error(err)
-    } {
-        console.log(`Nothing like a good ${PORT} wine`)
-    }
+app.post('/post-review/', (req, res, next) => {
+    console.log(req)
+    const review = new Review({
+        _id: new mongoose.Types.ObjectId(),
+        restaurantId: req.body.restaurantId,
+        authorId: req.body.authorId,
+        userName: req.body.userName,
+        createdOn: Date.now(),
+        info: req.body.info
+    })
+    review.save().then(result => {
+        res.status(200).send(result)
+    })
+})
+
+
+
+
+app.listen(PORT, () => {
+    console.log(`Nothing like a good ${PORT} wine`)
 })
