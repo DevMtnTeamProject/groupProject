@@ -1,11 +1,12 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, Button } from "react-native";
-import NewReviewForm from "./components/NewReviewForm";
+import React, { Component } from "react";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 import { AuthSession } from "expo";
+import { StyleSheet, Text, View, Image, Button } from "react-native";
+import HomeScreen from "./views/HomeScreen";
 
 const FB_APP_ID = "2051924541563103";
 
-export default class App extends React.Component {
+class FacebookAuth extends Component {
   _handlePressAsync = async () => {
     let redirectUrl = AuthSession.getRedirectUrl();
     console.log("this is redirectUrl", redirectUrl);
@@ -38,17 +39,36 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Open FB Auth" onPress={this._handlePressAsync} />
-        <NewReviewForm />
+        <View />
+        <Button title="LOG IN" onPress={this._handlePressAsync} />
       </View>
     );
+  }
+}
+
+// Routes
+const AppNavigator = createStackNavigator(
+  {
+    Login: FacebookAuth,
+    Home: HomeScreen
+  },
+  {
+    initialRouteName: "Login"
+  }
+);
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "green",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center"
   }
