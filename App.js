@@ -5,12 +5,16 @@ import {
   createSwitchNavigator
 } from "react-navigation";
 import { AuthSession } from "expo";
+
 import Reactotron from "reactotron-react-native";
+
+// import axios from "axios";
+
+import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
+
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
 import FavoriteScreen from "./views/FavoriteScreen";
-
-import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 const FB_APP_ID = "2051924541563103";
 
@@ -51,7 +55,7 @@ class FacebookAuth extends Component {
       const loginPost2 = await fetch("http://192.168.11.12:4006/login-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, name, hi: "hi again" })
+        body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
       });
 
       // this will get friends list who have installed the app
