@@ -32,12 +32,6 @@ class FacebookAuth extends Component {
       //users id
       const id = JSON.parse(userData._bodyInit).id;
 
-      _bootstrapAsync = async () => {
-        const userToken = await AsyncStorage.getItem("userToken");
-
-        // This will switch to the App screen or Auth screen and this loading
-        // screen will be unmounted and thrown away.
-      };
       console.log("this is userData id", JSON.parse(userData._bodyInit).id);
       // this will get friends list who have installed the app
       // const friends = await fetch(
@@ -59,20 +53,6 @@ class FacebookAuth extends Component {
     );
   }
 }
-
-// class HomeScreen extends Component {
-//   render() {
-//     return (
-//       <View>
-//         <Text>This is HomeScreen</Text>
-//         <Button
-//           title="go back"
-//           onPress={() => this.props.navigation.navigate("Auth")}
-//         />
-//       </View>
-//     );
-//   }
-// }
 
 // ROUTES
 
