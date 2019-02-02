@@ -15,9 +15,7 @@ initial location rendered === user location
 */
 //ajksdlf;jaf/
 export default class Map extends Component {
-
   render() {
-    // console.log('hhhhh', mapstyles)
     return (
       <MapView
         region={this.props.region}
@@ -27,11 +25,7 @@ export default class Map extends Component {
         provider={PROVIDER_GOOGLE}
       >
         {this.props.markers.map(marker => (
-          <Marker
-          // coordinate={marker.latlng}
-          // title={marker.title}
-          // description={marker.description}
-          />
+          <Marker />
         ))}
       </MapView>
     );
