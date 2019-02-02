@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const massive = require("massive");
 const mongoose = require("mongoose");
 const PORT = 4006;
 
@@ -35,12 +34,8 @@ app.get("/get-reviews/:restaurantId", (req, res, next) => {
 });
 
 //gets user info
-
 app.post("/login-user", (req, res, next) => {
-  console.log("44444444 nyquil chill");
-
   const user = LoginUser.findOne({ fbId: req.body.id });
-  console.log("xxxxxxxxxxxx", user);
   const createUser = new LoginUser({
     _id: new mongoose.Types.ObjectId(),
     fbId: req.body.id,
