@@ -5,14 +5,20 @@ import {
   createSwitchNavigator
 } from "react-navigation";
 import { AuthSession } from "expo";
+// import axios from "axios";
+
+  import('./Reactotron.Config').then(() => console.log('Reactotron Configured'))
+
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
 import FavoriteScreen from "./views/FavoriteScreen";
+
 
 const FB_APP_ID = "2051924541563103";
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
+    console.log('XXXXXXXXXXXX YEP YEP YEP YEP YEP')
     let redirectUrl = AuthSession.getRedirectUrl();
     console.log("this is redirectUrl", redirectUrl);
     // login and get a token
@@ -23,6 +29,9 @@ class FacebookAuth extends Component {
     });
     console.log("RESULT", result);
     if (result.type === "success") {
+
+      console.log('inside of IF')
+      
       const token = result.params.access_token;
 
       //use token to get user userData
@@ -32,6 +41,7 @@ class FacebookAuth extends Component {
       //users id
       const id = JSON.parse(userData._bodyInit).id;
 
+      const name = JSON.parse(userData._bodyInit).name;
       _bootstrapAsync = async () => {
         const userToken = await AsyncStorage.getItem("userToken");
 
@@ -44,7 +54,16 @@ class FacebookAuth extends Component {
       //   `https://graph.facebook.com/${id}/friends?access_token=${token}`
       // );
       // console.log("this is friends", friends);
+      console.log('dhauihfduiabfiuah',name)
+      console.log('nifuebafuiebafui',id)
+
+      // const loginPost = await axios.post('localhost:4006/login-user', {id, name, test: 'hi hi hi'})
+
+      const loginPost2 = await fetch('http://localhost:4006/login-user', { method: 'POST', headers: { "Content-Type": "application/json"}, body: { id, name}})
+      console.log('this is loginpost2', loginPost2)
     }
+
+    
   };
 
   render() {
