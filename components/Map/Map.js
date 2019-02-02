@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import mapstyles from "./mapstyles.json";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import Image from "react-native"
 
 // functionality of map
 /*
@@ -13,7 +14,6 @@ initial location rendered === user location
 
 
 */
-//ajksdlf;jaf/
 export default class Map extends Component {
 
   render() {
@@ -29,6 +29,7 @@ export default class Map extends Component {
         {this.props.markers.map(marker => (
           <Marker
           // coordinate={marker.latlng}
+          // Image={require('https://www.dropbox.com/s/ek5gfyslwo7dadw/Marker.png?dl=0')}
           // title={marker.title}
           // description={marker.description}
           />

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import Map from "../components/Map/Map";
+import ReviewCard from "../components/ReviewCard/ReviewCard"
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
