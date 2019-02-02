@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import {
+  createStackNavigator,
+  createAppContainer,
+  createSwitchNavigator
+} from "react-navigation";
 import { AuthSession } from "expo";
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
+import FavoriteScreen from "./views/FavoriteScreen";
 
 const FB_APP_ID = "2051924541563103";
 
@@ -27,6 +32,12 @@ class FacebookAuth extends Component {
       //users id
       const id = JSON.parse(userData._bodyInit).id;
 
+      _bootstrapAsync = async () => {
+        const userToken = await AsyncStorage.getItem("userToken");
+
+        // This will switch to the App screen or Auth screen and this loading
+        // screen will be unmounted and thrown away.
+      };
       console.log("this is userData id", JSON.parse(userData._bodyInit).id);
       // this will get friends list who have installed the app
       // const friends = await fetch(
@@ -39,27 +50,49 @@ class FacebookAuth extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View />
         <Button title="LOG IN" onPress={this._handlePressAsync} />
+        <Button
+          title="HomeScreen"
+          onPress={() => this.props.navigation.navigate("Home")}
+        />
       </View>
     );
   }
 }
 
-// Routes
-const AppNavigator = createStackNavigator(
+// class HomeScreen extends Component {
+//   render() {
+//     return (
+//       <View>
+//         <Text>This is HomeScreen</Text>
+//         <Button
+//           title="go back"
+//           onPress={() => this.props.navigation.navigate("Auth")}
+//         />
+//       </View>
+//     );
+//   }
+// }
+
+// ROUTES
+
+// Main App Nav
+const AppStack = createStackNavigator(
   {
-    Login: FacebookAuth,
+    Auth: FacebookAuth,
     Home: HomeScreen
+    // Favorites: FavoriteScreen
   },
-  {
-    initialRouteName: "Login"
-  }
+  { initialRouteName: "Auth" }
 );
 
-const AppContainer = createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(AppStack);
 
-export default class App extends React.Component {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return <AppContainer />;
   }
