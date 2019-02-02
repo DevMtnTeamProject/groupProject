@@ -2,11 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 import NewReviewForm from "./components/NewReviewForm";
 import { AuthSession } from "expo";
+// import axios from "axios";
+
+  import('./Reactotron.Config').then(() => console.log('Reactotron Configured'))
+
 
 const FB_APP_ID = "2051924541563103";
 
 export default class App extends React.Component {
   _handlePressAsync = async () => {
+    console.log('XXXXXXXXXXXX YEP YEP YEP YEP YEP')
     let redirectUrl = AuthSession.getRedirectUrl();
     console.log("this is redirectUrl", redirectUrl);
     // login and get a token
@@ -17,6 +22,9 @@ export default class App extends React.Component {
     });
     console.log("RESULT", result);
     if (result.type === "success") {
+
+      console.log('inside of IF')
+      
       const token = result.params.access_token;
 
       //use token to get user userData
@@ -26,13 +34,22 @@ export default class App extends React.Component {
       //users id
       const id = JSON.parse(userData._bodyInit).id;
 
-      console.log("this is userData id", JSON.parse(userData._bodyInit).id);
+      const name = JSON.parse(userData._bodyInit).name;
       // this will get friends list who have installed the app
       // const friends = await fetch(
       //   `https://graph.facebook.com/${id}/friends?access_token=${token}`
       // );
       // console.log("this is friends", friends);
+      console.log('dhauihfduiabfiuah',name)
+      console.log('nifuebafuiebafui',id)
+
+      // const loginPost = await axios.post('localhost:4006/login-user', {id, name, test: 'hi hi hi'})
+
+      const loginPost2 = await fetch('http://localhost:4006/login-user', { method: 'POST', headers: { "Content-Type": "application/json"}, body: { id, name}})
+      console.log('this is loginpost2', loginPost2)
     }
+
+    
   };
 
   render() {
