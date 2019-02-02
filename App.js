@@ -1,15 +1,22 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, Button } from "react-native";
-import NewReviewForm from "./components/NewReviewForm";
+import React, { Component } from "react";
+import {
+  createStackNavigator,
+  createAppContainer,
+  createSwitchNavigator
+} from "react-navigation";
 import { AuthSession } from "expo";
 // import axios from "axios";
 
   import('./Reactotron.Config').then(() => console.log('Reactotron Configured'))
 
+import { StyleSheet, Text, View, Image, Button } from "react-native";
+import HomeScreen from "./views/HomeScreen";
+import FavoriteScreen from "./views/FavoriteScreen";
+
 
 const FB_APP_ID = "2051924541563103";
 
-export default class App extends React.Component {
+class FacebookAuth extends Component {
   _handlePressAsync = async () => {
     console.log('XXXXXXXXXXXX YEP YEP YEP YEP YEP')
     let redirectUrl = AuthSession.getRedirectUrl();
@@ -35,6 +42,13 @@ export default class App extends React.Component {
       const id = JSON.parse(userData._bodyInit).id;
 
       const name = JSON.parse(userData._bodyInit).name;
+      _bootstrapAsync = async () => {
+        const userToken = await AsyncStorage.getItem("userToken");
+
+        // This will switch to the App screen or Auth screen and this loading
+        // screen will be unmounted and thrown away.
+      };
+      console.log("this is userData id", JSON.parse(userData._bodyInit).id);
       // this will get friends list who have installed the app
       // const friends = await fetch(
       //   `https://graph.facebook.com/${id}/friends?access_token=${token}`
@@ -55,17 +69,58 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Open FB Auth" onPress={this._handlePressAsync} />
-        <NewReviewForm />
+        <Button title="LOG IN" onPress={this._handlePressAsync} />
+        <Button
+          title="HomeScreen"
+          onPress={() => this.props.navigation.navigate("Home")}
+        />
       </View>
     );
+  }
+}
+
+// class HomeScreen extends Component {
+//   render() {
+//     return (
+//       <View>
+//         <Text>This is HomeScreen</Text>
+//         <Button
+//           title="go back"
+//           onPress={() => this.props.navigation.navigate("Auth")}
+//         />
+//       </View>
+//     );
+//   }
+// }
+
+// ROUTES
+
+// Main App Nav
+const AppStack = createStackNavigator(
+  {
+    Auth: FacebookAuth,
+    Home: HomeScreen
+    // Favorites: FavoriteScreen
+  },
+  { initialRouteName: "Auth" }
+);
+
+const AppContainer = createAppContainer(AppStack);
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <AppContainer />;
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "green",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center"
   }
