@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const googleMapsClient = require("@google/maps");
 
@@ -39,4 +38,3 @@ module.exports = {
       }`;
   }
 };
->>>>>>> Stashed changes

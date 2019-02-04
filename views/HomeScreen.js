@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import MapView, { Marker, PROVIDER_GOOGLE, Callout } from "react-native-maps";
+// import Callout from "react-native-maps";
+import mapstyles from "../components/Map/mapstyles.json";
+
 import {
   createStackNavigator,
   createAppContainer,
   createBottomTabNavigator
 } from "react-navigation";
 import FavoriteScreen from "./FavoriteScreen";
-import Map from "../components/Map/Map";
+// import Map from "../components/Map/Map";
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -19,19 +23,33 @@ class HomeScreen extends Component {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
       },
-      markers: []
+      markers: [],
+      searchInput: ""
     };
   }
   onRegionChange = region => {
     this.setState({ region });
   };
+
+  // handleSearchInput = e => {
+  //   this.setState({ searchInput: e.target.value });
+  // };
   render() {
     return (
-      <View>
-        <Text>Home Screen</Text>
-        <View style={styles.container}>
-          <Map region={this.state.region} markers={this.state.markers} />
-        </View>
+      <View style={styles.container}>
+        <MapView
+          region={this.state.region}
+          style={styles.map}
+          customMapStyle={mapstyles}
+          showUserLocation={true}
+          provider={PROVIDER_GOOGLE}
+        />
+        <TextInput
+          id="place_search"
+          placeholder={"Search"}
+          style={styles.searchInput}
+          // onChangeText={this.handleSearchInput}
+        />
       </View>
     );
   }
@@ -58,5 +76,21 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  calloutView: {
+    flexDirection: "row",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    borderRadius: 10,
+    width: "40%",
+    marginLeft: "30%",
+    marginRight: "30%",
+    marginTop: 20
+  },
+  searchInput: {
+    backgroundColor: "white",
+    borderColor: "gray",
+    height: 40,
+    width: "100%",
+    borderWidth: 1
   }
 });
