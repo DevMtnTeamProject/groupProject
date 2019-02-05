@@ -1,8 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE, Callout } from "react-native-maps";
-// import Callout from "react-native-maps";
-import mapstyles from "../components/Map/mapstyles.json";
+import axios from "axios";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView
+} from "react-native";
+import { GoogleAutoComplete } from "react-native-google-autocomplete";
+import { Map } from "../components/Map/Map";
+import { LocationItem } from "../components/Map/LocationItem";
+import { apiKey } from "../components/Map/key";
 
 import {
   createStackNavigator,
@@ -10,6 +19,7 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import FavoriteScreen from "./FavoriteScreen";
+import Axios from "axios";
 // import Map from "../components/Map/Map";
 
 class HomeScreen extends Component {
@@ -24,32 +34,48 @@ class HomeScreen extends Component {
         longitudeDelta: 0.0421
       },
       markers: [],
-      searchInput: ""
+      destination: "",
+      predictions: []
     };
   }
   onRegionChange = region => {
     this.setState({ region });
   };
 
-  // handleSearchInput = e => {
-  //   this.setState({ searchInput: e.target.value });
-  // };
+  handleInputChange = destination => {
+    this.setState({ destination });
+  };
+
+  async onDestinationSearch(destination) {
+    this.setState({ destination });
+
+    const apiURL = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${apiKey}
+    &input=${destination}&location=${this.state.latitude},${
+      this.state.longitude
+    }&radius=2000`;
+
+    try {
+      const result = await fetch(apiURL);
+      const json = await result.json();
+      this.setState({ predictions: json.predictions });
+    } catch (err) {
+      console.error(err);
+    }
+  }
   render() {
+    const predictions = this.state.predictions.map(prediction => (
+      <Text key={prediction.id}>{prediction.description}</Text>
+    ));
     return (
       <View style={styles.container}>
-        <MapView
-          region={this.state.region}
-          style={styles.map}
-          customMapStyle={mapstyles}
-          showUserLocation={true}
-          provider={PROVIDER_GOOGLE}
-        />
+        <Map region={this.state.region} />
         <TextInput
-          id="place_search"
-          placeholder={"Search"}
-          style={styles.searchInput}
-          // onChangeText={this.handleSearchInput}
+          placeholder="Search for a restaurant"
+          style={styles.textInput}
+          value={this.state.searchString}
+          onChangeText={destination => this.onDestinationSearch(destination)}
         />
+        {predictions}
       </View>
     );
   }
@@ -86,11 +112,11 @@ const styles = StyleSheet.create({
     marginRight: "30%",
     marginTop: 20
   },
-  searchInput: {
-    backgroundColor: "white",
-    borderColor: "gray",
+  textInput: {
     height: 40,
-    width: "100%",
-    borderWidth: 1
+    width: 400,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    backgroundColor: "white"
   }
 });

@@ -1,11 +1,8 @@
-require("dotenv").config();
-import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
+
 import mapstyles from "./mapstyles.json";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-
-const IOS_API_KEY = process.env.GOOGLE_API_KEY_IOS;
-const ANDROID_API_KEY = process.env.GOOGLE_API_KEY_ANDROID;
 
 // TODO functionality of map
 /*
@@ -17,23 +14,20 @@ initial location rendered === user location
 
 
 */
-export default class Map extends Component {
-  render() {
-    return (
-      <MapView
-        region={this.props.region}
-        style={styles.map}
-        customMapStyle={mapstyles}
-        showUserLocation={true}
-        provider={PROVIDER_GOOGLE}
-      >
-        {this.props.markers.map(marker => (
-          <Marker />
-        ))}
-      </MapView>
-    );
-  }
-}
+
+export const Map = ({ region, markers }) => {
+  return (
+    <MapView
+      region={region}
+      style={styles.map}
+      customMapStyle={mapstyles}
+      showUserLocation={true}
+      provider={PROVIDER_GOOGLE}
+    >
+      {markers && markers.map(marker => <Marker />)}
+    </MapView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -45,5 +39,12 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  textInput: {
+    height: 40,
+    width: 400,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    backgroundColor: "white"
   }
 });

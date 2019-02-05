@@ -7,3 +7,4 @@ npm-debug.*
 *.mobileprovision
 server/.env
 .env
+./components/Map/key
