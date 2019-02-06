@@ -1,19 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-
 import mapstyles from "./mapstyles.json";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-
-// TODO functionality of map
-/*
-view reviewed restaurant pins on map
-view favorite restaurant pins on map
-on pin click, expand view to see restaurant info
-search for restaurants
-initial location rendered === user location
-
-
-*/
+import { apiKey } from "./key";
 
 export const Map = ({ region, markers }) => {
   return (

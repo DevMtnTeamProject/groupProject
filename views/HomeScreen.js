@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import {
   View,
   Text,
@@ -8,9 +7,7 @@ import {
   StyleSheet,
   ScrollView
 } from "react-native";
-import { GoogleAutoComplete } from "react-native-google-autocomplete";
 import { Map } from "../components/Map/Map";
-import { LocationItem } from "../components/Map/LocationItem";
 import { apiKey } from "../components/Map/key";
 
 import {
@@ -19,8 +16,6 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import FavoriteScreen from "./FavoriteScreen";
-import Axios from "axios";
-// import Map from "../components/Map/Map";
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -42,10 +37,7 @@ class HomeScreen extends Component {
     this.setState({ region });
   };
 
-  handleInputChange = destination => {
-    this.setState({ destination });
-  };
-
+  // Restaurant Search - google places api
   async onDestinationSearch(destination) {
     this.setState({ destination });
 
@@ -62,10 +54,12 @@ class HomeScreen extends Component {
       console.error(err);
     }
   }
+
   render() {
     const predictions = this.state.predictions.map(prediction => (
       <Text key={prediction.id}>{prediction.description}</Text>
     ));
+
     return (
       <View style={styles.container}>
         <Map region={this.state.region} />
