@@ -1,9 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  createStackNavigator,
+  createAppContainer,
+  createBottomTabNavigator
+} from "react-navigation";
+import FavoriteScreen from "./FavoriteScreen";
 import Map from "../components/Map/Map";
-import ReviewCard from "../components/ReviewCard/ReviewCard"
+// import ReviewCard from "../components/ReviewCard/ReviewCard"
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -22,19 +28,25 @@ export default class HomeScreen extends React.Component {
   };
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View>
         <Text>Home Screen</Text>
         <View style={styles.container}>
           <Map region={this.state.region} markers={this.state.markers} />
         </View>
-        <Button
-          title="View Favorites"
-          onPress={() => this.props.navigation.navigate("Favorites")}
-        />
       </View>
     );
   }
 }
+
+// bottom nav bar
+const TabNavigator = createBottomTabNavigator({
+  Home: HomeScreen,
+  Favorites: FavoriteScreen
+});
+
+// creates container component
+const homeContainer = createAppContainer(TabNavigator);
+export default homeContainer;
 
 const styles = StyleSheet.create({
   container: {
