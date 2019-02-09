@@ -38,10 +38,10 @@ class FacebookAuth extends Component {
         // screen will be unmounted and thrown away.
       };
 
-      const loginPost2 = await fetch("http://192.168.11.12:4006/login-user", {
+      const loginPost2 = await fetch("http://192.168.10.248:4006/login-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
+        body: JSON.stringify({ id, info: { userName: name } })
       });
     }
   };

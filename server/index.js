@@ -21,10 +21,7 @@ app.use(
 
 app.use(bodyParser.json());
 
-mongoose.connect(
-  process.env.MONGO_STRING,
-  { useNewUrlParser: true }
-);
+mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true });
 
 // gets reviews by restaurantId
 app.get("/get-reviews/:restaurantId", (req, res, next) => {
@@ -35,15 +32,23 @@ app.get("/get-reviews/:restaurantId", (req, res, next) => {
 
 //gets user info
 app.post("/login-user", (req, res, next) => {
-  const user = LoginUser.findOne({ fbId: req.body.id });
-  const createUser = new LoginUser({
-    _id: new mongoose.Types.ObjectId(),
-    fbId: req.body.id,
-    createdOn: Date.now(),
-    info: req.body.info
-  });
-  createUser.save().then(result => {
-    res.status(200).send(result);
+  LoginUser.find({ fbId: req.body.id }, function(err, result) {
+    if (result.length > 0) {
+      console.log(result);
+      res.status(200).send(result);
+      console.log("login was successful");
+    } else {
+      const createUser = new LoginUser({
+        _id: new mongoose.Types.ObjectId(),
+        fbId: req.body.id,
+        createdOn: Date.now(),
+        info: req.body.info
+      });
+      createUser.save().then(result => {
+        res.status(200).send(result);
+        console.log("this is a new person");
+      });
+    }
   });
 });
 
