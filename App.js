@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { AuthSession } from "expo";
+import store from "./store";
+import { Provider, connect } from "react-redux";
+import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
+import Dummy from "./components/dummy";
 
 const FB_APP_ID = "2051924541563103";
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
+    this.props.fetchUser();
+
     let redirectUrl = AuthSession.getRedirectUrl();
 
     // login and get a token
@@ -59,12 +65,29 @@ class FacebookAuth extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isFetching: state.userReducer.isFetching
+  };
+};
+
+const mapActionsToProps = {
+  fetchUser,
+  fetchUserSuccess,
+  fetchUserFailure
+};
+
+const connectedFacebookAuth = connect(
+  mapStateToProps,
+  mapActionsToProps
+)(FacebookAuth);
+
 // ROUTES
 
 // Main App Nav
 const AppStack = createStackNavigator(
   {
-    Auth: FacebookAuth,
+    Auth: connectedFacebookAuth,
     Home: HomeScreen
   },
   { initialRouteName: "Auth" }
@@ -78,7 +101,12 @@ export default class App extends Component {
   }
 
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer />
+        <Dummy />
+      </Provider>
+    );
   }
 }
 
