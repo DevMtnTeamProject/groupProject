@@ -8,3 +8,4 @@ npm-debug.*
 server/.env
 .env
 ./components/Map/key
+./ignoreThis
