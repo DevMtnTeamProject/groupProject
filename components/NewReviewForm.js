@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  AppRegistry,
-  View,
-  Text,
-  TextInput,
-  Image,
-  Button,
-  StyleSheet
-} from "react-native";
+import { View, Text, TextInput, Image, Button, StyleSheet } from "react-native";
 
 import axios from "axios";
 
