@@ -6,7 +6,7 @@ const reviewSchema = mongoose.Schema({
     info: {
         review: String,
         order: String,
-        avoid: Array,
+        avoid: String,
         restaurantId: String,
         authorId: String,
         userName: String,
