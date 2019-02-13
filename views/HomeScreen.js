@@ -13,8 +13,7 @@ import { Constants, Location, Permissions } from "expo";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
 
-// import { Map } from "../components/Map/Map";
-import { apiKey } from "../components/Map/key";
+import { GOOGLE_API_KEY } from "../ignoreThis";
 
 import {
   createStackNavigator,
@@ -39,14 +38,6 @@ class HomeScreen extends Component {
     };
   }
 
-  // TODO
-
-  // in componentDidMount:
-  // google places api call to get nearby restaurants and render those results as markers on map
-  // `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${apiKey}&location=&radus=
-  // function for rendering reviewed restaurants on the map
-
-  // make predictions pressable and that then renders a marker on the map with details
   async componentDidMount() {
     if (Platform.OS === "android" && !Constants.isDevice) {
       console.log("error", "error");
@@ -61,8 +52,6 @@ class HomeScreen extends Component {
       console.log("error getting location permission", error);
     } else {
       this._getLocationAsync();
-      // if (userLocation.status === 200)
-      // (this.getRestaurantsNearby());
     }
   };
 
@@ -77,17 +66,20 @@ class HomeScreen extends Component {
 
   getRestaurantsNearby = async () => {
     const { userLatitude, userLongitude } = this.state;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&key=${apiKey}`;
+    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${GOOGLE_API_KEY}`;
 
     try {
       const nearbyResults = await fetch(nearby_api_url);
       const json = await nearbyResults.json();
+      console.log("nearby results", json);
       const restaurantArr = json.results.map(r => ({
+        place_id: r.place_id,
         latLng: {
           latitude: r.geometry.location.lat,
           longitude: r.geometry.location.lng
         },
-        name: r.name
+        name: r.name,
+        address: r.vicinity
       }));
       this.setState({ nearbyRestaurants: restaurantArr });
     } catch (err) {
@@ -101,7 +93,7 @@ class HomeScreen extends Component {
 
     this.setState({ destination });
 
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${apiKey}
+    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${GOOGLE_API_KEY}
     &input=${destination}&location=${userLatitude},${userLongitude}&radius=2000`;
 
     try {
@@ -128,15 +120,13 @@ class HomeScreen extends Component {
       latitudeDelta: 0.2,
       longitudeDelta: 0.2
     };
-    console.log("this is state", this.state);
     return (
       <View style={styles.container}>
         <MapView
           region={region}
-          mapType={"standard"}
           style={styles.map}
-          // customMapStyle={mapstyles}
-          // provider={PROVIDER_GOOGLE}
+          customMapStyle={mapstyles}
+          provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           onRegionChange={this._getLocationAsync}
         >
@@ -144,17 +134,14 @@ class HomeScreen extends Component {
             !!this.state.nearbyRestaurants.length &&
             this.state.nearbyRestaurants.map(r => (
               <Marker
+                key={r.place_id}
                 coordinate={r.latLng}
                 title={r.name}
-                description={"description"}
+                description={r.address}
               />
             ))}
         </MapView>
         <React.Fragment>
-          <Button
-            title="get nearby restaurants"
-            onPress={() => this.getRestaurantsNearby()}
-          />
           <TextInput
             placeholder="Search for a restaurant"
             style={styles.textInput}

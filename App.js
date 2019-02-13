@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { AuthSession } from "expo";
+import { IP, FB_APP_ID } from "./ignoreThis";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
-
-const FB_APP_ID = "2051924541563103";
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
@@ -38,10 +37,10 @@ class FacebookAuth extends Component {
         // screen will be unmounted and thrown away.
       };
 
-      const loginPost2 = await fetch("http://192.168.11.12:4006/login-user", {
+      const loginPost2 = await fetch(`http://${IP}:4006/login-user`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
+        body: JSON.stringify({ id, info: { userName: name } })
       });
     }
   };
