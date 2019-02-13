@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import mapstyles from "./mapstyles.json";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { apiKey } from "./key";
+import { GOOGLE_API_KEY } from "../../ignoreThis";
 
 export const Map = ({ region, markers }) => {
   return (
