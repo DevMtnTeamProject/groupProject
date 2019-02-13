@@ -8,7 +8,7 @@ import {
   ScrollView
 } from "react-native";
 import { Map } from "../components/Map/Map";
-import { apiKey } from "../components/Map/key";
+import { GOOGLE_API_KEY } from "../ignoreThis";
 
 import {
   createStackNavigator,
