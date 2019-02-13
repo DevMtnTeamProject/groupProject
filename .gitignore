@@ -9,3 +9,5 @@ server/.env
 .env
 ./components/Map/key
 ./ignoreThis
+
+
