@@ -18,7 +18,7 @@ class FacebookAuth extends Component {
     this.props.fetchUser();
 
     let redirectUrl = AuthSession.getRedirectUrl();
-    console.log("the url", redirectUrl + "/Home");
+    console.log("the url", redirectUrl);
 
     // login and get a token
     let result = await AuthSession.startAsync({
