@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { AuthSession } from "expo";
-<<<<<<< HEAD
-import { IP, FB_APP_ID } from "./ignoreThis";
-=======
 import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
 import { IP, facebookID } from "./ignorethis";
->>>>>>> 1659b474f374d1c63e213f739cb4a1e281984bda
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
 
-<<<<<<< HEAD
-=======
 const FB_APP_ID = facebookID;
 
->>>>>>> 1659b474f374d1c63e213f739cb4a1e281984bda
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
     this.props.fetchUser();
@@ -44,13 +37,6 @@ class FacebookAuth extends Component {
       //users id
       const id = JSON.parse(userData._bodyInit).id;
       const name = JSON.parse(userData._bodyInit).name;
-
-      _bootstrapAsync = async () => {
-        const userToken = await AsyncStorage.getItem("userToken");
-
-        // This will switch to the App screen or Auth screen and this loading
-        // screen will be unmounted and thrown away.
-      };
 
       const loginPost2 = await fetch(`http://${IP}:4006/login-user`, {
         method: "POST",

@@ -6,13 +6,5 @@ npm-debug.*
 *.key
 *.mobileprovision
 .env
-<<<<<<< HEAD
-=======
-./components/Map/key
-
-
->>>>>>> 1659b474f374d1c63e213f739cb4a1e281984bda
 ./ignoreThis
-
-
 
