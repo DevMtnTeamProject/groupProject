@@ -70,42 +70,42 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     displayRestaurant: {
-        flex: 1,
+        flex: 2,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayTime: {
-        flex: 1,
+        flex: 3,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayDistance: {
-        flex: 1,
+        flex: 4,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayReview: {
-        flex: 1,
+        flex: 5,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayRecommended: {
-        flex: 1,
+        flex: 6,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayAvoid: {
-        flex: 1,
+        flex: 7,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',

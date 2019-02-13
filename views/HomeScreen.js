@@ -7,7 +7,6 @@ import {
 } from "react-navigation";
 import FavoriteScreen from "./FavoriteScreen";
 import Map from "../components/Map/Map";
-// import ReviewCard from "../components/ReviewCard/ReviewCard"
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -33,6 +32,7 @@ class HomeScreen extends Component {
         <View style={styles.container}>
           <Map region={this.state.region} markers={this.state.markers} />
         </View>
+
       </View>
     );
   }
