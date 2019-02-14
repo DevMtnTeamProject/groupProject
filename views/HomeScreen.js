@@ -8,15 +8,12 @@ import {
   ScrollView,
   Button
 } from "react-native";
-<<<<<<< HEAD
+
 import { Constants, Location, Permissions } from "expo";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
 
-=======
-import { Map } from "../components/Map/Map";
->>>>>>> a3401d9986a0429a16a986d27f3973b7c568b046
 import { GOOGLE_API_KEY } from "../ignoreThis";
 
 import {
