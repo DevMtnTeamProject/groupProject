@@ -34,6 +34,8 @@ export default class ReviewCard extends React.Component {
 
         return (
             <View style={styles.container}>
+                <SaveButton
+                />
                 <Text style={styles.displayRestaurant}
                     value={this.props.restaurantName}
                 />
@@ -52,8 +54,6 @@ export default class ReviewCard extends React.Component {
                 />
                 <Text style={styles.displayAvoid}
                     value={this.props.avoid}
-                />
-                <SaveButton
                 />
 
 
