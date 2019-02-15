@@ -19,11 +19,11 @@ class FacebookAuth extends Component {
 
     let redirectUrl = AuthSession.getRedirectUrl();
     console.log("the url", redirectUrl);
-
+    console.log("1", FB_APP_ID, "2", facebookID, "3", IP);
     // login and get a token
     let result = await AuthSession.startAsync({
       authUrl: `https://www.facebook.com/v3.2/dialog/oauth?response_type=token&client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(
-        redirectUrl + "/Home"
+        redirectUrl
       )}`
     });
 
