@@ -17,11 +17,9 @@ const FB_APP_ID = Expo.Constants.manifest.facebookAppId;
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
     this.props.fetchUser();
-    //console.log(Expo.Constants.manifest.facebookAppId);
-    console.log(Expo.Constants.manifest.GOOGLE_API_KEY);
+
     let redirectUrl = AuthSession.getRedirectUrl();
-    //console.log("the url", redirectUrl);
-    //console.log("1", FB_APP_ID, "2", facebookID, "3", IP);
+
     // login and get a token
     let result = await AuthSession.startAsync({
       authUrl: `https://www.facebook.com/v3.2/dialog/oauth?response_type=token&client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(
