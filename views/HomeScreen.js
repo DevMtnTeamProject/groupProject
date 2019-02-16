@@ -41,7 +41,6 @@ class HomeScreen extends Component {
     };
   }
 
-
   async componentDidMount() {
     if (Platform.OS === "android" && !Constants.isDevice) {
       console.log("error", "error");
@@ -57,10 +56,9 @@ class HomeScreen extends Component {
     } else {
       this._getLocationAsync();
     }
-
+  };
   onRegionChange = region => {
     this.setState({ region });
-
   };
 
   _getLocationAsync = async () => {
