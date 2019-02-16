@@ -2,18 +2,25 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import mapstyles from "./mapstyles.json";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { GOOGLE_API_KEY } from "../../ignoreThis";
 
 export const Map = ({ region, markers }) => {
   return (
     <MapView
-      region={region}
+      initialRegion={region}
       style={styles.map}
       customMapStyle={mapstyles}
-      showUserLocation={true}
+      showUserLocation
+      followsUserLocation={true}
       provider={PROVIDER_GOOGLE}
     >
-      {markers && markers.map(marker => <Marker />)}
+      {markers &&
+        markers.map(marker => (
+          <MapView.Marker
+            coordinate={marker.latlng}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
     </MapView>
   );
 };
