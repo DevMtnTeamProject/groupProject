@@ -13,6 +13,7 @@ import { StyleSheet, View, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
 
 const FB_APP_ID = Expo.Constants.manifest.facebookAppId;
+const IP = Expo.Constants.manifest.IP;
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
