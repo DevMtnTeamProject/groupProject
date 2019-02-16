@@ -5,7 +5,7 @@ import { AuthSession } from "expo";
 import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
-import { IP, facebookID } from "./ignorethis";
+import { IP, facebookID } from "./ignoreThis";
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button } from "react-native";

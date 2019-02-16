@@ -21,6 +21,10 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "description": "",
+    "extra": {
+      "IP": "192.168.11.13",
+      "GOOGLE_API_KEY": "AIzaSyAEkhgqltI0yF7Dp03GyjIXQ5XI8b87Lwk"
+    }
   }
 }
