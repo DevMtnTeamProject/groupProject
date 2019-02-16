@@ -4,9 +4,11 @@ import {
     View,
     Image,
     Text,
+    Icon
 
 } from 'react-native';
-import FontAwesome, { Icon } from 'react-native-fontawesome';
+import FontAwesome, { Icons } from "react-native-fontawesome";
+
 
 type Props = {
     ratingObj: {
@@ -27,10 +29,10 @@ export default class StarRating extends Component<Props>{
         //Loop 5 times
         for (var i = 1; i <= 5; i++) {
             //set path to filled stars
-            <Icon name="star" />
+            <FontAwesome>{Icons.star}</FontAwesome>
             //If ratings is lower, set path to unfilled stars
             if (i > ratingObj.ratings) {
-                <Icon name="star" />
+                <FontAwesome>{Icons.star}</FontAwesome>
             }
             //Push the Image tag in the stars array
             // Icon.push((<Image style={styles.image} source={path} />))
