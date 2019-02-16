@@ -4,7 +4,6 @@ import { AuthSession } from "expo";
 import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
-import { IP } from "./ignoreThis";
 import * as Expo from "expo";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
