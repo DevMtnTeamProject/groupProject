@@ -7,7 +7,7 @@ npm-debug.*
 *.mobileprovision
 .env
 ./components/Map/key
-
+app.json
 
 ./ignoreThis
 

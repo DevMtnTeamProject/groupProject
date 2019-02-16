@@ -8,7 +8,10 @@ import {
   ScrollView
 } from "react-native";
 import { Map } from "../components/Map/Map";
+import * as Expo from "expo";
+
 import { GOOGLE_API_KEY } from "../ignoreThis";
+let GoogleApiKey = Expo.Constants.manifest.GOOGLE_API_KEY;
 
 import {
   createStackNavigator,
@@ -34,6 +37,7 @@ class HomeScreen extends Component {
     };
   }
   onRegionChange = region => {
+    console.log(GoogleApiKey);
     this.setState({ region });
   };
 

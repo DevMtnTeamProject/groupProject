@@ -9,10 +9,6 @@ export const FETCHING_FAILURE = "FETCHING_FAILURE";
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case IS_FETCHING:
-      console.log(
-        "fetch user reducer",
-        Object.assign({}, state, { isFetching: true })
-      );
       return Object.assign({}, state, { isFetching: true });
     case FETCHING_SUCCESS:
       return Object.assign({}, state, {
