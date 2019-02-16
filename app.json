@@ -22,5 +22,9 @@
       "supportsTablet": true
     },
     "description": ""
+  },
+  "extra": {
+    "IP": "192.168.11.12",
+    "GOOGLE_API_KEY": "AIzaSyAEkhgqltI0yF7Dp03GyjIXQ5XI8b87Lwk"
   }
 }

@@ -5,25 +5,25 @@ import { AuthSession } from "expo";
 import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
-import { IP, facebookID } from "./ignorethis";
+import * as Expo from "expo";
+
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
 
-const FB_APP_ID = facebookID;
+const FB_APP_ID = Expo.Constants.manifest.facebookAppId;
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
     this.props.fetchUser();
 
     let redirectUrl = AuthSession.getRedirectUrl();
-    console.log("the url", redirectUrl);
 
     // login and get a token
     let result = await AuthSession.startAsync({
       authUrl: `https://www.facebook.com/v3.2/dialog/oauth?response_type=token&client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(
-        redirectUrl + "/Home"
+        redirectUrl
       )}`
     });
 

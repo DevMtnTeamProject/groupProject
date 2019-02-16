@@ -14,7 +14,9 @@ import { Constants, Location, Permissions } from "expo";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
 
-import { GOOGLE_API_KEY } from "../ignoreThis";
+import * as Expo from "expo";
+
+let GoogleApiKey = Expo.Constants.manifest.GOOGLE_API_KEY;
 
 import {
   createStackNavigator,
@@ -39,6 +41,7 @@ class HomeScreen extends Component {
     };
   }
 
+
   async componentDidMount() {
     if (Platform.OS === "android" && !Constants.isDevice) {
       console.log("error", "error");
@@ -54,6 +57,10 @@ class HomeScreen extends Component {
     } else {
       this._getLocationAsync();
     }
+
+  onRegionChange = region => {
+    this.setState({ region });
+
   };
 
   _getLocationAsync = async () => {
@@ -67,7 +74,7 @@ class HomeScreen extends Component {
 
   getRestaurantsNearby = async () => {
     const { userLatitude, userLongitude } = this.state;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${GOOGLE_API_KEY}`;
+    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${GoogleApiKey}`;
 
     try {
       const nearbyResults = await fetch(nearby_api_url);
