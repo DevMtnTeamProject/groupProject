@@ -1,9 +1,6 @@
 import Reactotron from "reactotron-react-native";
 import { reactotronRedux } from "reactotron-redux";
-import * as Expo from "expo";
-
-let IP = Expo.Constants.manifest.IP;
-
+import { IP } from "./config";
 // use your computer's IP address for the host here
 export default Reactotron.configure({ host: IP }) // controls connection & communication settings
   .use(reactotronRedux())

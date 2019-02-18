@@ -14,17 +14,13 @@ import { Constants, Location, Permissions } from "expo";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
 
-import * as Expo from "expo";
-
-let GoogleApiKey = Expo.Constants.manifest.GOOGLE_API_KEY;
-
 import {
   createStackNavigator,
   createAppContainer,
   createBottomTabNavigator
 } from "react-navigation";
 import FavoriteScreen from "./FavoriteScreen";
-
+import { googleApiKey } from "../config";
 // TODO add permissions for user location
 
 class HomeScreen extends Component {
@@ -41,7 +37,6 @@ class HomeScreen extends Component {
     };
   }
 
-
   async componentDidMount() {
     if (Platform.OS === "android" && !Constants.isDevice) {
       console.log("error", "error");
@@ -57,10 +52,10 @@ class HomeScreen extends Component {
     } else {
       this._getLocationAsync();
     }
+  };
 
   onRegionChange = region => {
     this.setState({ region });
-
   };
 
   _getLocationAsync = async () => {
@@ -74,7 +69,7 @@ class HomeScreen extends Component {
 
   getRestaurantsNearby = async () => {
     const { userLatitude, userLongitude } = this.state;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${GoogleApiKey}`;
+    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
 
     try {
       const nearbyResults = await fetch(nearby_api_url);
@@ -101,7 +96,7 @@ class HomeScreen extends Component {
 
     this.setState({ destination });
 
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${GOOGLE_API_KEY}
+    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}
     &input=${destination}&location=${userLatitude},${userLongitude}&radius=2000`;
 
     try {

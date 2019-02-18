@@ -5,7 +5,7 @@ import { AuthSession } from "expo";
 import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
-import * as Expo from "expo";
+import { IP } from "./config";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
@@ -13,7 +13,6 @@ import { StyleSheet, View, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
 
 const FB_APP_ID = Expo.Constants.manifest.facebookAppId;
-const IP = Expo.Constants.manifest.IP;
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
