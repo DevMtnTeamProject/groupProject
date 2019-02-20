@@ -1,18 +1,26 @@
 import React, { Component } from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import {
+  createSwitchNavigator,
+  createDrawerNavigator,
+  createStackNavigator,
+  createAppContainer,
+  createBottomTabNavigator
+} from "react-navigation";
 import { AuthSession } from "expo";
 
 import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
-import { IP } from "./config";
+import { IP, facebookID } from "./config";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
-import { StyleSheet, View, Button } from "react-native";
-import HomeScreen from "./views/HomeScreen";
+import { StyleSheet, View, Button, Text } from "react-native";
+// import HomeScreen from "./views/HomeScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import HomeStackNavigator from "./screens/HomeScreen";
 
-const FB_APP_ID = Expo.Constants.manifest.facebookAppId;
+const FB_APP_ID = facebookID;
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
@@ -76,24 +84,7 @@ const connectedFacebookAuth = connect(
   mapActionsToProps
 )(FacebookAuth);
 
-// ROUTES
-
-// Main App Nav
-const AppStack = createStackNavigator(
-  {
-    Auth: connectedFacebookAuth,
-    Home: HomeScreen
-  },
-  { initialRouteName: "Auth" }
-);
-
-const AppContainer = createAppContainer(AppStack);
-
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Provider store={store}>
@@ -102,6 +93,30 @@ export default class App extends Component {
     );
   }
 }
+
+// ROUTES
+
+const AppDrawerNavigator = createDrawerNavigator({
+  Home: {
+    screen: HomeStackNavigator
+  },
+  Profile: {
+    screen: ProfileScreen
+  }
+});
+
+// const AuthStackNavigation = createStackNavigator({
+//   Welcome: WelcomeScreen,
+//   Login: LoginScreen,
+//   Signup: SignupScreen
+// });
+
+const AppSwitchNavigator = createSwitchNavigator({
+  UserAuth: connectedFacebookAuth,
+  Home: AppDrawerNavigator
+});
+// Main App Nav
+const AppContainer = createAppContainer(AppSwitchNavigator);
 
 const styles = StyleSheet.create({
   container: {
