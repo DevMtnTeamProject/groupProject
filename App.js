@@ -6,13 +6,14 @@ import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
 import { IP } from "./config";
+import {facebookID} from './config'
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button } from "react-native";
 import HomeScreen from "./views/HomeScreen";
 
-const FB_APP_ID = Expo.Constants.manifest.facebookAppId;
+const FB_APP_ID = facebookID;
 
 class FacebookAuth extends Component {
   _handlePressAsync = async () => {
@@ -42,7 +43,7 @@ class FacebookAuth extends Component {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
-      });
+      }).then(data=> this.props.fetchUserSuccess(JSON.parse(data._bodyInit)[0]));
     }
   };
 
