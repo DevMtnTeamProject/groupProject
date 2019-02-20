@@ -1,49 +1,58 @@
 import React, { Component } from 'React';
+import { Ionicons } from '@expo/vector-icons';
 import {
     StyleSheet,
     View,
-    Image,
     Text,
     Icon
 
 } from 'react-native';
-import FontAwesome, { Icons } from "react-native-fontawesome";
+// import FontAwesome, { Icons } from "react-native-fontawesome";
 
 
-type Props = {
-    ratingObj: {
-        ratings: number;
-        views: "number";
-    }
-
-};
-
-export default class StarRating extends Component<Props>{
-    render() {
-        //Receive the ratings object from the props
-        let ratingObj = this.props.ratingObj
-
-        //This array will contain our star tags. We will include this
-        //array between the view tag
-        // let stars = [];
-        //Loop 5 times
-        for (var i = 1; i <= 5; i++) {
-            //set path to filled stars
-            <FontAwesome>{Icons.star}</FontAwesome>
-            //If ratings is lower, set path to unfilled stars
-            if (i > ratingObj.ratings) {
-                <FontAwesome>{Icons.star}</FontAwesome>
-            }
-            //Push the Image tag in the stars array
-            // Icon.push((<Image style={styles.image} source={path} />))
+// const icon = <FontAwesome name={'star'} />;
 
 
+export default class Stars extends Component {
+    get stars() {
+        const { votes } = this.props;
+        const starsNumber = parseInt(votes);
+        const starElements = [];
+        for (let i = 0; i < 5; i++) {
+            starElements.push(
+                <Ionicons
+                    name="ios-star"
+                    size={32}
+                    color={"grey"}
+                />
+
+            )
         }
-
+    }
+    render() {
         return (
-            <View style={styles.container}>
-                {/* {stars} */}
-                <Text style={styles.text}>({ratingObj.views})</Text>
+            <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "center" }}>
+                {this.stars}
+                <Ionicons
+                    name="ios-star"
+                    size={32}
+                    color={"grey"}
+                />
+                <Ionicons
+                    name="ios-star"
+                    size={32}
+                    color={"grey"}
+                />
+                <Ionicons
+                    name="ios-star"
+                    size={32}
+                    color={"grey"}
+                />
+                <Ionicons
+                    name="ios-star"
+                    size={32}
+                    color={"grey"}
+                />
             </View>
 
         );
