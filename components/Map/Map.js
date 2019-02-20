@@ -1,43 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import mapstyles from "./mapstyles.json";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import Image from "react-native"
 
-// functionality of map
-/*
-view reviewed restaurant pins on map
-view favorite restaurant pins on map
-on pin click, expand view to see restaurant info
-search for restaurant
-initial location rendered === user location
-
-
-*/
-export default class Map extends Component {
-
-  render() {
-    // console.log('hhhhh', mapstyles)
-    return (
-      <MapView
-        region={this.props.region}
-        style={styles.map}
-        customMapStyle={mapstyles}
-        showUserLocation={true}
-        provider={PROVIDER_GOOGLE}
-      >
-        {this.props.markers.map(marker => (
-          <Marker
-          // coordinate={marker.latlng}
-          // Image={require('https://www.dropbox.com/s/ek5gfyslwo7dadw/Marker.png?dl=0')}
-          // title={marker.title}
-          // description={marker.description}
+export const Map = ({ region, markers }) => {
+  return (
+    <MapView
+      initialRegion={region}
+      style={styles.map}
+      customMapStyle={mapstyles}
+      showUserLocation
+      followsUserLocation={true}
+      provider={PROVIDER_GOOGLE}
+    >
+      {markers &&
+        markers.map(marker => (
+          <MapView.Marker
+            coordinate={marker.latlng}
+            title={marker.title}
+            description={marker.description}
           />
         ))}
-      </MapView>
-    );
-  }
-}
+    </MapView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -49,5 +35,12 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  textInput: {
+    height: 40,
+    width: 400,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    backgroundColor: "white"
   }
 });
