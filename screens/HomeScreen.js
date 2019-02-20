@@ -21,6 +21,7 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import FavoriteScreen from "./FavoriteScreen";
+import ProfileScreen from "./ProfileScreen";
 import { googleApiKey } from "../config";
 // TODO add permissions for user location
 
@@ -163,12 +164,14 @@ class HomeScreen extends Component {
 const HomeTabNavigator = createBottomTabNavigator(
   {
     Home: HomeScreen,
-    Favorites: FavoriteScreen
+    Favorites: FavoriteScreen,
+    Profile: ProfileScreen
   },
   {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
       return {
+        header: null,
         headerTitle: routeName
       };
     }

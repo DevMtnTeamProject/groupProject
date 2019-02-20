@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
+import { createStackNavigator } from "react-navigation";
 
-export default class ProfileScreen extends Component {
+class ProfileScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -10,3 +11,9 @@ export default class ProfileScreen extends Component {
     );
   }
 }
+
+const ProfileStackNavigator = createStackNavigator({
+  Profile: ProfileScreen
+});
+
+export default ProfileStackNavigator;
