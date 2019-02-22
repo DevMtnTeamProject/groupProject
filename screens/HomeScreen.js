@@ -10,21 +10,21 @@ import {
 } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
+import Icon from "@expo/vector-icons/Ionicons";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
-
-import * as Expo from "expo";
-
-let GoogleApiKey = Expo.Constants.manifest.GOOGLE_API_KEY;
 
 import {
   createStackNavigator,
   createAppContainer,
   createBottomTabNavigator
 } from "react-navigation";
-import FavoriteScreen from "./FavoriteScreen";
+import FavoriteStackNavigator from "./FavoriteScreen";
+import ProfileStackNavigator from "./ProfileScreen";
+import MarkerDetailsScreen from "./MarkerDetailsScreen";
 
+import { googleApiKey } from "../config";
 // TODO add permissions for user location
 
 class HomeScreen extends Component {
@@ -72,12 +72,11 @@ class HomeScreen extends Component {
 
   getRestaurantsNearby = async () => {
     const { userLatitude, userLongitude } = this.state;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${GoogleApiKey}`;
+    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
 
     try {
       const nearbyResults = await fetch(nearby_api_url);
       const json = await nearbyResults.json();
-      console.log("nearby results", json);
       const restaurantArr = json.results.map(r => ({
         place_id: r.place_id,
         latLng: {
@@ -99,7 +98,7 @@ class HomeScreen extends Component {
 
     this.setState({ destination });
 
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${GOOGLE_API_KEY}
+    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}
     &input=${destination}&location=${userLatitude},${userLongitude}&radius=2000`;
 
     try {
@@ -123,8 +122,8 @@ class HomeScreen extends Component {
     const region = {
       latitude: this.state.userLatitude,
       longitude: this.state.userLongitude,
-      latitudeDelta: 0.2,
-      longitudeDelta: 0.2
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.05
     };
     return (
       <View style={styles.container}>
@@ -162,14 +161,48 @@ class HomeScreen extends Component {
 }
 
 // bottom nav bar
-const TabNavigator = createBottomTabNavigator({
-  Home: HomeScreen,
-  Favorites: FavoriteScreen
-});
+const HomeTabNavigator = createBottomTabNavigator(
+  {
+    Home: HomeScreen,
+    Favorites: FavoriteStackNavigator,
+    Profile: ProfileStackNavigator
+  },
+  {
+    navigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state.routes[navigation.state.index];
+      return {
+        header: null,
+        headerTitle: routeName
+      };
+    }
+  }
+);
+const HomeStackNavigator = createStackNavigator(
+  {
+    HomeTabNavigator: {
+      screen: HomeTabNavigator
+    },
+    Details: {
+      screen: MarkerDetailsScreen
+    }
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <Icon
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu"
+            size={30}
+          />
+        )
+      };
+    }
+  }
+);
 
-// creates container component
-const homeContainer = createAppContainer(TabNavigator);
-export default homeContainer;
+export default HomeStackNavigator;
 
 const styles = StyleSheet.create({
   container: {
