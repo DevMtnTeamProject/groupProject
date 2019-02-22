@@ -16,10 +16,11 @@ import { IP, facebookID } from "./config";
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button, Text } from "react-native";
-// import HomeScreen from "./views/HomeScreen";
+import HomeScreen from "./views/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import HomeStackNavigator from "./screens/HomeScreen";
 import ProfileStackNavigator from "./screens/ProfileScreen";
+import FavoriteStackNavigator from "./screens/FavoriteScreen";
 
 const FB_APP_ID = facebookID;
 
@@ -97,17 +98,15 @@ export default class App extends Component {
 
 // ROUTES
 
-const AppDrawerNavigator = createDrawerNavigator(
-  {
-    Home: {
-      screen: HomeStackNavigator
-    },
-    Profile: {
-      screen: ProfileStackNavigator
-    }
+const AppDrawerNavigator = createDrawerNavigator({
+  Home: {
+    screen: HomeStackNavigator
   },
-  {}
-);
+  favorites: FavoriteStackNavigator,
+  Profile: {
+    screen: ProfileStackNavigator
+  }
+});
 
 // const AuthStackNavigation = createStackNavigator({
 //   Welcome: WelcomeScreen,
@@ -117,7 +116,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 
 const AppSwitchNavigator = createSwitchNavigator({
   UserAuth: connectedFacebookAuth,
-  Home: AppDrawerNavigator
+  Home: HomeStackNavigator
 });
 // Main App Nav
 const AppContainer = createAppContainer(AppSwitchNavigator);

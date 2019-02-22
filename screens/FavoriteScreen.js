@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import { View, Text } from "react-native";
 import ReviewCard from "../components/Review Card/ReviewCard";
+import { createStackNavigator } from "react-navigation";
 
-export default class FavoriteScreen extends React.Component {
+class FavoriteScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -12,3 +13,9 @@ export default class FavoriteScreen extends React.Component {
     );
   }
 }
+
+const FavoriteStackNavigator = createStackNavigator({
+  Profile: FavoriteScreen
+});
+
+export default FavoriteStackNavigator;

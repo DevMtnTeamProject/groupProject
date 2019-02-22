@@ -20,8 +20,10 @@ import {
   createAppContainer,
   createBottomTabNavigator
 } from "react-navigation";
-import FavoriteScreen from "./FavoriteScreen";
-import ProfileScreen from "./ProfileScreen";
+import FavoriteStackNavigator from "./FavoriteScreen";
+import ProfileStackNavigator from "./ProfileScreen";
+import MarkerDetailsScreen from "./MarkerDetailsScreen";
+
 import { googleApiKey } from "../config";
 // TODO add permissions for user location
 
@@ -76,7 +78,6 @@ class HomeScreen extends Component {
     try {
       const nearbyResults = await fetch(nearby_api_url);
       const json = await nearbyResults.json();
-      console.log("nearby results", json);
       const restaurantArr = json.results.map(r => ({
         place_id: r.place_id,
         latLng: {
@@ -122,8 +123,8 @@ class HomeScreen extends Component {
     const region = {
       latitude: this.state.userLatitude,
       longitude: this.state.userLongitude,
-      latitudeDelta: 0.2,
-      longitudeDelta: 0.2
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.05
     };
     return (
       <View style={styles.container}>
@@ -164,8 +165,8 @@ class HomeScreen extends Component {
 const HomeTabNavigator = createBottomTabNavigator(
   {
     Home: HomeScreen,
-    Favorites: FavoriteScreen,
-    Profile: ProfileScreen
+    Favorites: FavoriteStackNavigator,
+    Profile: ProfileStackNavigator
   },
   {
     navigationOptions: ({ navigation }) => {
@@ -179,7 +180,12 @@ const HomeTabNavigator = createBottomTabNavigator(
 );
 const HomeStackNavigator = createStackNavigator(
   {
-    HomeTabNavigator: HomeTabNavigator
+    HomeTabNavigator: {
+      screen: HomeTabNavigator
+    },
+    Details: {
+      screen: MarkerDetailsScreen
+    }
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
