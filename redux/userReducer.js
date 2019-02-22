@@ -1,5 +1,6 @@
 const initialState = {
-  isFetching: false
+  isFetching: false,
+  user: []
 };
 
 export const IS_FETCHING = "IS_FETCHING";
