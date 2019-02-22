@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  SafeAreaView,
   Platform,
   View,
   Text,
@@ -10,7 +11,7 @@ import {
 } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
-import Icon from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/EvilIcons";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
@@ -28,6 +29,10 @@ import { googleApiKey } from "../config";
 // TODO add permissions for user location
 
 class HomeScreen extends Component {
+  static navigationOptions = {
+    headerTitle: "EXPLORE"
+  };
+
   constructor(props) {
     super(props);
 
@@ -127,7 +132,7 @@ class HomeScreen extends Component {
       longitudeDelta: 0.05
     };
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={{ flex: 1 }}>
         <MapView
           region={region}
           style={styles.map}
@@ -147,61 +152,64 @@ class HomeScreen extends Component {
               />
             ))}
         </MapView>
-        <React.Fragment>
-          <TextInput
-            placeholder="Search for a restaurant"
-            style={styles.textInput}
-            value={this.state.searchString}
-            onChangeText={destination => this.onDestinationSearch(destination)}
-          />
-          {predictions}
-        </React.Fragment>
-      </View>
+        <View style={{ position: "absolute", width: "100%" }}>
+          <View
+            style={{
+              padding: 10,
+              backgroundColor: "white",
+              marginHorizontal: 20,
+              marginTop: 10,
+              shadowOffset: { width: 0, height: 0 },
+              shadowColor: "black",
+              shadowOpacity: 0.2,
+              elevation: 1
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <Icon name="search" size={20} style={{ marginRight: 10 }} />
+              <TextInput
+                placeholder="Find a Restaurant"
+                placeholderTextColor="grey"
+                style={{ flex: 1, fontWeight: "700", backgroundColor: "white" }}
+                value={this.state.searchString}
+                onChangeText={destination =>
+                  this.onDestinationSearch(destination)
+                }
+              />
+            </View>
+            {predictions}
+          </View>
+        </View>
+      </SafeAreaView>
     );
   }
 }
 
 // bottom nav bar
-const HomeTabNavigator = createBottomTabNavigator(
-  {
-    Home: HomeScreen,
-    Favorites: FavoriteStackNavigator,
-    Profile: ProfileStackNavigator
+// const HomeTabNavigator = createBottomTabNavigator(
+//   {
+//     Home: HomeScreen,
+//     Favorites: FavoriteStackNavigator,
+//     Profile: ProfileStackNavigator
+//   },
+//   {
+//     navigationOptions: ({ navigation }) => {
+//       const { routeName } = navigation.state.routes[navigation.state.index];
+//       return {
+//         header: null,
+//         headerTitle: routeName
+//       };
+//     }
+//   }
+// );
+const HomeStackNavigator = createStackNavigator({
+  HomeTabNavigator: {
+    screen: HomeScreen
   },
-  {
-    navigationOptions: ({ navigation }) => {
-      const { routeName } = navigation.state.routes[navigation.state.index];
-      return {
-        header: null,
-        headerTitle: routeName
-      };
-    }
+  Details: {
+    screen: MarkerDetailsScreen
   }
-);
-const HomeStackNavigator = createStackNavigator(
-  {
-    HomeTabNavigator: {
-      screen: HomeTabNavigator
-    },
-    Details: {
-      screen: MarkerDetailsScreen
-    }
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        headerLeft: (
-          <Icon
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu"
-            size={30}
-          />
-        )
-      };
-    }
-  }
-);
+});
 
 export default HomeStackNavigator;
 
