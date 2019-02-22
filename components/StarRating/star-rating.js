@@ -9,49 +9,61 @@ import {
 } from 'react-native';
 // import FontAwesome, { Icons } from "react-native-fontawesome";
 
-
-// const icon = <FontAwesome name={'star'} />;
-
-
 export default class Stars extends Component {
     get stars() {
         const { votes } = this.props;
         const starsNumber = parseInt(votes);
         const starElements = [];
+        const emptyStars = [
+            <Ionicons
+                name="ios-star-outline"
+                size={23}
+                color={"grey"}
+            />]
         for (let i = 0; i < 5; i++) {
-            starElements.push(
+            if (votes < i) {
+                emptyStars
+            }
+            else (starElements.push(
                 <Ionicons
                     name="ios-star"
-                    size={32}
+                    size={28}
                     color={"grey"}
                 />
 
-            )
+            ))
         }
+
     }
     render() {
         return (
             <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "center" }}>
                 {this.stars}
                 <Ionicons
-                    name="ios-star"
-                    size={32}
+                    name="ios-star-outline"
+                    size={23}
                     color={"grey"}
                 />
                 <Ionicons
-                    name="ios-star"
-                    size={32}
+                    name="ios-star-outline"
+                    size={23}
                     color={"grey"}
                 />
                 <Ionicons
-                    name="ios-star"
-                    size={32}
+                    name="ios-star-outline"
+                    size={23}
                     color={"grey"}
                 />
                 <Ionicons
-                    name="ios-star"
-                    size={32}
+                    name="ios-star-outline"
+                    size={23}
                     color={"grey"}
+                />
+                <Ionicons
+                    name="ios-star-outline"
+                    size={23}
+                    color={"grey"}
+                    marginLeft={45}
                 />
             </View>
 
