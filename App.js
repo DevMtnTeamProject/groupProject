@@ -16,8 +16,6 @@ import { IP, facebookID } from "./config";
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 import { StyleSheet, View, Button, Text } from "react-native";
-import HomeScreen from "./views/HomeScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import HomeStackNavigator from "./screens/HomeScreen";
 import ProfileStackNavigator from "./screens/ProfileScreen";
 import FavoriteStackNavigator from "./screens/FavoriteScreen";
@@ -52,7 +50,9 @@ class FacebookAuth extends Component {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
-      }).then(data=> this.props.fetchUserSuccess(JSON.parse(data._bodyInit)[0]));
+      }).then(data =>
+        this.props.fetchUserSuccess(JSON.parse(data._bodyInit)[0])
+      );
     }
   };
 
