@@ -52,7 +52,7 @@ class FacebookAuth extends Component {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
-      });
+      }).then(data=> this.props.fetchUserSuccess(JSON.parse(data._bodyInit)[0]));
     }
   };
 
