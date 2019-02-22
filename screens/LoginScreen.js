@@ -1,30 +1,20 @@
 import React, { Component } from "react";
-import {
-  createSwitchNavigator,
-  createDrawerNavigator,
-  createStackNavigator,
-  createAppContainer,
-  createBottomTabNavigator
-} from "react-navigation";
 import { AuthSession } from "expo";
 
-import store from "./store";
+import store from "../store";
 import { Provider, connect } from "react-redux";
-import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
+import {
+  fetchUser,
+  fetchUserSuccess,
+  fetchUserFailure
+} from "../redux/actions";
 import { IP, facebookID } from "./config";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
-import { StyleSheet, View, Button, Text } from "react-native";
-import HomeScreen from "./views/HomeScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import HomeStackNavigator from "./screens/HomeScreen";
-import ProfileStackNavigator from "./screens/ProfileScreen";
-import FavoriteStackNavigator from "./screens/FavoriteScreen";
-
 const FB_APP_ID = facebookID;
 
-class FacebookAuth extends Component {
+export default class FacebookAuth extends Component {
   _handlePressAsync = async () => {
     this.props.fetchUser();
 
@@ -52,7 +42,7 @@ class FacebookAuth extends Component {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
-      }).then(data=> this.props.fetchUserSuccess(JSON.parse(data._bodyInit)[0]));
+      });
     }
   };
 
@@ -85,47 +75,3 @@ const connectedFacebookAuth = connect(
   mapStateToProps,
   mapActionsToProps
 )(FacebookAuth);
-
-export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <AppContainer />
-      </Provider>
-    );
-  }
-}
-
-// ROUTES
-
-const AppDrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: HomeStackNavigator
-  },
-  favorites: FavoriteStackNavigator,
-  Profile: {
-    screen: ProfileStackNavigator
-  }
-});
-
-// const AuthStackNavigation = createStackNavigator({
-//   Welcome: WelcomeScreen,
-//   Login: conn
-//   Signup: SignupScreen
-// });
-
-const AppSwitchNavigator = createSwitchNavigator({
-  UserAuth: connectedFacebookAuth,
-  Home: HomeStackNavigator
-});
-// Main App Nav
-const AppContainer = createAppContainer(AppSwitchNavigator);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
