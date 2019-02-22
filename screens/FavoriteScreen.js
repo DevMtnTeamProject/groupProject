@@ -8,7 +8,7 @@ class FavoriteScreen extends Component {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>Favorites Screen</Text>
-        {/* <ReviewCard /> */}
+        <ReviewCard />
       </View>
     );
   }
