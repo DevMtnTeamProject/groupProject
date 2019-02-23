@@ -8,6 +8,7 @@ import {
 
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import colors from '../../styles/colors'
 // import FontAwesome, { Icons } from "react-native-fontawesome";
 
 
@@ -16,7 +17,8 @@ class GeneralStarExample extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            starCount: ''
+            starCount: '',
+            fullStarColor: ''
         };
     }
 
@@ -34,6 +36,7 @@ class GeneralStarExample extends Component {
                 maxStars={5}
                 rating={this.state.starCount}
                 selectedStar={(rating) => this.onStarRatingPress(rating)}
+                fullStarColor={colors.yellow}
             />
         );
     }
