@@ -8,5 +8,5 @@ npm-debug.*
 .env
 ./components/Map/key
 config.js
-
+app.json
 
