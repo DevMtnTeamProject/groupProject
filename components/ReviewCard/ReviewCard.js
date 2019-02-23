@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Button, Dimensions } from "react-native";
 import { AuthSession } from "expo";
-import StarRating from '../StarRating/star-rating';
+import GeneralStarExample from '../StarRating/star-rating';
 import { TextInput } from "react-native-gesture-handler";
 import SaveButton from '../SaveButton/save-button';
 
@@ -39,7 +39,7 @@ export default class ReviewCard extends React.Component {
                 <Text style={styles.displayRestaurant}
                     value={this.props.restaurantName}
                 />
-                <StarRating ratingObj={ratingObj} />
+                <GeneralStarExample ratingObj={ratingObj} />
                 <Text style={styles.displayTime}
                     value={this.props.timeSinceReview}
                 />

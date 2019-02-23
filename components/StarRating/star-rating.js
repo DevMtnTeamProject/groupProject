@@ -1,95 +1,69 @@
 import React, { Component } from 'React';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {
     StyleSheet,
     View,
     Text,
-    Icon
+    Icon,
 
 } from 'react-native';
+import StarRating from 'react-native-star-rating';
 // import FontAwesome, { Icons } from "react-native-fontawesome";
 
-export default class Stars extends Component {
-    get stars() {
-        const { votes } = this.props;
-        const starsNumber = parseInt(votes);
-        const starElements = [];
-        const emptyStars = [
-            <Ionicons
-                name="ios-star-outline"
-                size={23}
-                color={"grey"}
-            />]
-        for (let i = 0; i < 5; i++) {
-            if (votes < i) {
-                emptyStars
-            }
-            else (starElements.push(
-                <Ionicons
-                    name="ios-star"
-                    size={28}
-                    color={"grey"}
-                />
 
-            ))
-        }
+class GeneralStarExample extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            starCount: ''
+        };
     }
+
+    onStarRatingPress(rating) {
+        //something needs to go here to send the data to the backend
+        this.setState({
+            starCount: rating
+        });
+    }
+
     render() {
         return (
-            <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "center" }}>
-                {this.stars}
-                <Ionicons
-                    name="ios-star-outline"
-                    size={23}
-                    color={"grey"}
-                />
-                <Ionicons
-                    name="ios-star-outline"
-                    size={23}
-                    color={"grey"}
-                />
-                <Ionicons
-                    name="ios-star-outline"
-                    size={23}
-                    color={"grey"}
-                />
-                <Ionicons
-                    name="ios-star-outline"
-                    size={23}
-                    color={"grey"}
-                />
-                <Ionicons
-                    name="ios-star-outline"
-                    size={23}
-                    color={"grey"}
-                    marginLeft={45}
-                />
-            </View>
-
+            <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={this.state.starCount}
+                selectedStar={(rating) => this.onStarRatingPress(rating)}
+            />
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
+export default GeneralStarExample
 
-        backgroundColor: "#FF00FF",
-        flexDirection: 'row',
-        width: 100,
-        height: 25,
-    },
-    image: {
-        width: 25,
-        height: 300,
-    },
-    text: {
-        fontSize: 20,
-        marginLeft: 10,
-        marginRight: 10
-    },
+//we don't want the stars actually clickable on the review card from someone else.
 
 
-});
 
-//be sure to edit app.js to include the Star Rating component
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
