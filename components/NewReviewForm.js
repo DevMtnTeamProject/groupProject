@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Image, Button, StyleSheet } from "react-native";
 
-import axios from "axios";
-
-// StyleSheet below component
-
 export default class NewReviewForm extends Component {
   constructor(props) {
     super(props);
@@ -83,7 +79,6 @@ export default class NewReviewForm extends Component {
     );
   }
 }
-AppRegistry.registerComponent("native-test-app", () => NewReviewForm);
 
 const styles = StyleSheet.create({
   container: {
