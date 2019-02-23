@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Image, Button, StyleSheet } from "react-native";
+import axios from "axios";
 
 export default class NewReviewForm extends Component {
   constructor(props) {
@@ -15,16 +16,20 @@ export default class NewReviewForm extends Component {
     };
   }
   // TODO: add function that will populate restaurant name & location if selected from map
-
+  // geocode address before saving to database
   // save to db & clear inputs
   onSaveReview = () => {
-    // axios.post()
+    axios.post("/");
     console.log("saved review");
   };
 
   render() {
     return (
       <View style={styles.container}>
+        <View style={{ flexDirection: "row" }}>
+          <Text>Write a Review</Text>
+          <Text>Add Photos</Text>
+        </View>
         <Text style={styles.header}>Write a Review</Text>
         <TextInput
           name="name"
