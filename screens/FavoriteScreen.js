@@ -4,6 +4,10 @@ import ReviewCard from "../components/ReviewCard/ReviewCard";
 import { createStackNavigator } from "react-navigation";
 
 class FavoriteScreen extends Component {
+  static navigationOptions = {
+    headerTitle: "FAVORITES"
+  };
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -15,7 +19,7 @@ class FavoriteScreen extends Component {
 }
 
 const FavoriteStackNavigator = createStackNavigator({
-  Profile: FavoriteScreen
+  Favorites: FavoriteScreen
 });
 
 export default FavoriteStackNavigator;
