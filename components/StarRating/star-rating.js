@@ -1,67 +1,72 @@
 import React, { Component } from 'React';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {
     StyleSheet,
     View,
-    Image,
     Text,
+    Icon,
 
 } from 'react-native';
+import StarRating from 'react-native-star-rating';
+import colors from '../../styles/colors'
+// import FontAwesome, { Icons } from "react-native-fontawesome";
 
-type Props = {
-    ratingObj: {
-        ratings: number;
-        views: number;
+
+class GeneralStarExample extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            starCount: '',
+            fullStarColor: ''
+        };
     }
 
-};
+    onStarRatingPress(rating) {
+        //something needs to go here to send the data to the backend
+        this.setState({
+            starCount: rating
+        });
+    }
 
-export default class StarRating extends Component<Props>{
     render() {
-        //Receive the ratings object from the props
-        let ratingObj = this.props.ratingObj
-
-        //This array will contain our star tags. We will include this
-        //array between the view tag
-        let stars = [];
-        //Loop 5 times
-        for (var i = 1; i <= 5; i++) {
-            //set path to filled stars
-            let path = require('./star-filled.png');
-            //If ratings is lower, set path to unfilled stars
-            if (i > ratingObj.ratings) {
-                path = require('./star-unfilled.png');
-            }
-            //Push the Image tag in the stars array
-            stars.push((<Image style={styles.image} source={path} />))
-
-
-        }
-
         return (
-            <View style={styles.container}>
-                {stars}
-                <Text style={styles.text}>({ratingObj.views})</Text>
-            </View>
+            <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={this.state.starCount}
+                selectedStar={(rating) => this.onStarRatingPress(rating)}
+                fullStarColor={colors.yellow}
+            />
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#FF00FF",
-        flexDirection: 'row',
-    },
-    image: {
-        width: 25,
-        height: 25,
-    },
-    text: {
-        fontSize: 20,
-        marginLeft: 10,
-        marginRight: 10
-    },
+export default GeneralStarExample
+
+//we don't want the stars actually clickable on the review card from someone else.
 
 
-});
 
-//be sure to edit app.js to include the Star Rating component
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

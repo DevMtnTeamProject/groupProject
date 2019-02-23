@@ -121,27 +121,27 @@ const AppTabNavigator = createBottomTabNavigator(
     Home: {
       screen: HomeStackNavigator,
       navigationOptions: {
-        tabBarLabel: "EXPLORE",
+        tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="search" color={tintColor} size={24} />;
+          return <Icon name="search" color={tintColor} size={32} />;
         }
       }
     },
     Favorites: {
       screen: FavoriteStackNavigator,
       navigationOptions: {
-        tabBarLabel: "FAVORITE",
+        tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="heart" color={tintColor} size={24} />;
+          return <Icon name="heart" color={tintColor} size={32} />;
         }
       }
     },
     Profile: {
       screen: ProfileStackNavigator,
       navigationOptions: {
-        tabBarLabel: "PROFILE",
+        tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="user" color={tintColor} size={24} />;
+          return <Icon name="user" color={tintColor} size={32} />;
         }
       }
     }
@@ -156,7 +156,8 @@ const AppTabNavigator = createBottomTabNavigator(
         shadowOffset: { width: 5, height: 3 },
         shadowColor: "black",
         shadowOpacity: 0.5,
-        elevation: 5
+        elevation: 5,
+        paddingTop: 10
       }
     }
   }

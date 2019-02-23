@@ -15,13 +15,13 @@ export default class SaveButton extends Component {
                         title="Save"
                     />
                 </View>
-                <View style={styles.buttonContainer}>
+                {/* <View style={styles.buttonContainer}>
                     <Button
                         onPress={this._onPressButton}
                         title="Save"
                         color="#F4C900"
                     />
-                </View>
+                </View> */}
 
             </View>
         );
@@ -30,17 +30,29 @@ export default class SaveButton extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        ...StyleSheet.absoluteFillObject,
         flex: 1,
         justifyContent: 'center',
+        backgroundColor: '#eeeeee',
+        height: 50,
+        width: 200
+
     },
     buttonContainer: {
-        margin: 20
+
+        flex: 1,
+        margin: 1,
+        // backgroundColor: '#000000'
+
     },
-    alternativeLayoutButtonContainer: {
-        margin: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    }
+    // alternativeLayoutButtonContainer: {
+    //     margin: 20,
+    //     flex: 2,
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-between',
+    //     backgroundColor: '#000000'
+
+    // }
 });
 
 
