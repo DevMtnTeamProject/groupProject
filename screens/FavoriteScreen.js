@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
-import ReviewCard from "../components/Review Card/ReviewCard";
+import ReviewCard from "../components/ReviewCard/ReviewCard";
 import { createStackNavigator } from "react-navigation";
 
 class FavoriteScreen extends Component {

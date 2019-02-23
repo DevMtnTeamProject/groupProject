@@ -12,7 +12,7 @@ import Icon from "@expo/vector-icons/EvilIcons";
 import store from "./store";
 import { Provider, connect } from "react-redux";
 import { fetchUser, fetchUserSuccess, fetchUserFailure } from "./redux/actions";
-import { IP, facebookID } from "./config";
+import firebase, { IP, facebookID } from "./config";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
@@ -27,38 +27,54 @@ class FacebookAuth extends Component {
   _handlePressAsync = async () => {
     this.props.fetchUser();
 
-    let redirectUrl = AuthSession.getRedirectUrl();
+    const appId = Expo.Constants.manifest.extra.facebook.appId;
+    const permissions = ["public_profile", "email"]; // Permissions required, consult Facebook docs
 
-    // login and get a token
-    let result = await AuthSession.startAsync({
-      authUrl: `https://www.facebook.com/v3.2/dialog/oauth?response_type=token&client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(
-        redirectUrl
-      )}`
-    });
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
+      appId,
+      { permissions }
+    );
 
-    if (result.type === "success") {
-      const token = result.params.access_token;
+    switch (type) {
+      case "success": {
+        await firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL); // Set persistent auth state
+        const credential = firebase.auth.FacebookAuthProvider.credential(token);
+        const facebookProfileData = await firebase
+          .auth()
+          .signInAndRetrieveDataWithCredential(credential); // Sign in with Facebook credential
 
-      //use token to get user userData
-      const userData = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`
-      );
-      //users id
-      const id = JSON.parse(userData._bodyInit).id;
-      const name = JSON.parse(userData._bodyInit).name;
+        // Do something with Facebook profile data
+        // OR you have subscribed to auth state change, authStateChange handler will process the profile data
 
-      const loginPost2 = await fetch(`http://${IP}:4006/login-user`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
-      }).then(data =>
-        this.props.fetchUserSuccess(JSON.parse(data._bodyInit)[0])
-      );
+        let id = facebookProfileData.additionalUserInfo.profile.id;
+        let name = facebookProfileData.additionalUserInfo.profile.name;
+        let profilePic =
+          facebookProfileData.additionalUserInfo.profile.picture.data.url;
+
+        await fetch(`http://${IP}:4006/login-user`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, info: { userName: name }, hi: "hi again" })
+        })
+          .then(data =>
+            this.props.fetchUserSuccess(JSON.parse(data._bodyInit)[0])
+          )
+          .catch(err => console.warn("error hitting 4006/login-user: ", err));
+        // redirect to home
+        return Promise.resolve({ type: "success" });
+      }
+      case "cancel": {
+        return Promise.reject({ type: "cancel" });
+      }
     }
   };
 
   render() {
-    return (
+    return this.props.user ? (
+      this.props.navigation.navigate("Home")
+    ) : (
       <View style={styles.container}>
         <Button title="LOG IN" onPress={this._handlePressAsync} />
         <Button
@@ -72,7 +88,8 @@ class FacebookAuth extends Component {
 
 const mapStateToProps = state => {
   return {
-    isFetching: state.userReducer.isFetching
+    isFetching: state.userReducer.isFetching,
+    user: state.userReducer.user
   };
 };
 
@@ -104,27 +121,27 @@ const AppTabNavigator = createBottomTabNavigator(
     Home: {
       screen: HomeStackNavigator,
       navigationOptions: {
-        tabBarLabel: "EXPLORE",
+        tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="search" color={tintColor} size={24} />;
+          return <Icon name="search" color={tintColor} size={32} />;
         }
       }
     },
     Favorites: {
       screen: FavoriteStackNavigator,
       navigationOptions: {
-        tabBarLabel: "FAVORITE",
+        tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="heart" color={tintColor} size={24} />;
+          return <Icon name="heart" color={tintColor} size={32} />;
         }
       }
     },
     Profile: {
       screen: ProfileStackNavigator,
       navigationOptions: {
-        tabBarLabel: "PROFILE",
+        tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="user" color={tintColor} size={24} />;
+          return <Icon name="user" color={tintColor} size={32} />;
         }
       }
     }
@@ -139,7 +156,8 @@ const AppTabNavigator = createBottomTabNavigator(
         shadowOffset: { width: 5, height: 3 },
         shadowColor: "black",
         shadowOpacity: 0.5,
-        elevation: 5
+        elevation: 5,
+        paddingTop: 10
       }
     }
   }
