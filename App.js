@@ -7,6 +7,7 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import { AuthSession } from "expo";
+import Icon from "@expo/vector-icons/EvilIcons";
 
 import store from "./store";
 import { Provider, connect } from "react-redux";
@@ -98,25 +99,55 @@ export default class App extends Component {
 
 // ROUTES
 
-const AppDrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: HomeStackNavigator
+const AppTabNavigator = createBottomTabNavigator(
+  {
+    Home: {
+      screen: HomeStackNavigator,
+      navigationOptions: {
+        tabBarLabel: "EXPLORE",
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="search" color={tintColor} size={24} />;
+        }
+      }
+    },
+    Favorites: {
+      screen: FavoriteStackNavigator,
+      navigationOptions: {
+        tabBarLabel: "FAVORITE",
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="heart" color={tintColor} size={24} />;
+        }
+      }
+    },
+    Profile: {
+      screen: ProfileStackNavigator,
+      navigationOptions: {
+        tabBarLabel: "PROFILE",
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="user" color={tintColor} size={24} />;
+        }
+      }
+    }
   },
-  favorites: FavoriteStackNavigator,
-  Profile: {
-    screen: ProfileStackNavigator
+  {
+    tabBarOptions: {
+      activeTintColor: "red",
+      inactiveTintColor: "grey",
+      style: {
+        backgroundColor: "white",
+        borderTopWidth: 0,
+        shadowOffset: { width: 5, height: 3 },
+        shadowColor: "black",
+        shadowOpacity: 0.5,
+        elevation: 5
+      }
+    }
   }
-});
-
-// const AuthStackNavigation = createStackNavigator({
-//   Welcome: WelcomeScreen,
-//   Login: conn
-//   Signup: SignupScreen
-// });
+);
 
 const AppSwitchNavigator = createSwitchNavigator({
   UserAuth: connectedFacebookAuth,
-  Home: HomeStackNavigator
+  Home: AppTabNavigator
 });
 // Main App Nav
 const AppContainer = createAppContainer(AppSwitchNavigator);
