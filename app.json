@@ -13,13 +13,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
-    "description": ""
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyCRoXHQ6FtxvAaFc3nwVqhPXUR_ffn9PAI",
+        "authDomain": "xhttps://plated-6ac2e.firebaseapp.com/__/auth/handler",
+        "projectId": "plated-6ac2e"
+      },
+      "updates": {
+        "fallbackToCacheTimeout": 0
+      },
+      "assetBundlePatterns": ["**/*"],
+      "ios": {
+        "supportsTablet": true
+      },
+      "description": ""
+    }
   }
 }
