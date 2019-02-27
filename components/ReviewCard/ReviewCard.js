@@ -4,6 +4,7 @@ import { AuthSession } from "expo";
 import GeneralStarExample from '../StarRating/star-rating';
 import { TextInput } from "react-native-gesture-handler";
 import SaveButton from '../SaveButton/save-button';
+import color from '../../styles/colors';
 
 
 

@@ -18,7 +18,8 @@ class GeneralStarExample extends Component {
         super(props);
         this.state = {
             starCount: '',
-            fullStarColor: ''
+            fullStarColor: '',
+            starSize: 0
         };
     }
 
@@ -37,6 +38,7 @@ class GeneralStarExample extends Component {
                 rating={this.state.starCount}
                 selectedStar={(rating) => this.onStarRatingPress(rating)}
                 fullStarColor={colors.yellow}
+                starSize={30}
             />
         );
     }
