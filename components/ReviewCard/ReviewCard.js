@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Button, Dimensions } from "react-native";
 import { AuthSession } from "expo";
-import StarRating from '../StarRating/star-rating';
+import GeneralStarExample from '../StarRating/star-rating';
 import { TextInput } from "react-native-gesture-handler";
 import SaveButton from '../SaveButton/save-button';
 
@@ -39,7 +39,7 @@ export default class ReviewCard extends React.Component {
                 <Text style={styles.displayRestaurant}
                     value={this.props.restaurantName}
                 />
-                <StarRating ratingObj={ratingObj} />
+                <GeneralStarExample ratingObj={ratingObj} />
                 <Text style={styles.displayTime}
                     value={this.props.timeSinceReview}
                 />
@@ -70,42 +70,42 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     displayRestaurant: {
-        flex: 1,
+        flex: 2,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayTime: {
-        flex: 1,
+        flex: 3,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayDistance: {
-        flex: 1,
+        flex: 4,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayReview: {
-        flex: 1,
+        flex: 5,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayRecommended: {
-        flex: 1,
+        flex: 6,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     displayAvoid: {
-        flex: 1,
+        flex: 7,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',

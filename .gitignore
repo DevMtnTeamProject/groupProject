@@ -6,5 +6,5 @@ npm-debug.*
 *.key
 *.mobileprovision
 .env
-./ignoreThis
+config.js
 app.json

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  SafeAreaView,
   Platform,
   View,
   Text,
@@ -10,22 +11,28 @@ import {
 } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
+import Icon from "@expo/vector-icons/EvilIcons";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
-
-import { GOOGLE_API_KEY } from "../ignoreThis";
 
 import {
   createStackNavigator,
   createAppContainer,
   createBottomTabNavigator
 } from "react-navigation";
-import FavoriteScreen from "./FavoriteScreen";
+import FavoriteStackNavigator from "./FavoriteScreen";
+import ProfileStackNavigator from "./ProfileScreen";
+import MarkerDetailsScreen from "./MarkerDetailsScreen";
 
+import { googleApiKey } from "../config";
 // TODO add permissions for user location
 
 class HomeScreen extends Component {
+  static navigationOptions = {
+    headerTitle: "EXPLORE"
+  };
+
   constructor(props) {
     super(props);
 
@@ -56,6 +63,10 @@ class HomeScreen extends Component {
     }
   };
 
+  onRegionChange = region => {
+    this.setState({ region });
+  };
+
   _getLocationAsync = async () => {
     let location = await Location.getCurrentPositionAsync({});
     this.setState({
@@ -67,12 +78,11 @@ class HomeScreen extends Component {
 
   getRestaurantsNearby = async () => {
     const { userLatitude, userLongitude } = this.state;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${GOOGLE_API_KEY}`;
+    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
 
     try {
       const nearbyResults = await fetch(nearby_api_url);
       const json = await nearbyResults.json();
-      console.log("nearby results", json);
       const restaurantArr = json.results.map(r => ({
         place_id: r.place_id,
         latLng: {
@@ -94,7 +104,7 @@ class HomeScreen extends Component {
 
     this.setState({ destination });
 
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${GOOGLE_API_KEY}
+    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}
     &input=${destination}&location=${userLatitude},${userLongitude}&radius=2000`;
 
     try {
@@ -118,11 +128,11 @@ class HomeScreen extends Component {
     const region = {
       latitude: this.state.userLatitude,
       longitude: this.state.userLongitude,
-      latitudeDelta: 0.2,
-      longitudeDelta: 0.2
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.05
     };
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={{ flex: 1 }}>
         <MapView
           region={region}
           style={styles.map}
@@ -142,29 +152,66 @@ class HomeScreen extends Component {
               />
             ))}
         </MapView>
-        <React.Fragment>
-          <TextInput
-            placeholder="Search for a restaurant"
-            style={styles.textInput}
-            value={this.state.searchString}
-            onChangeText={destination => this.onDestinationSearch(destination)}
-          />
-          {predictions}
-        </React.Fragment>
-      </View>
+        <View style={{ position: "absolute", width: "100%" }}>
+          <View
+            style={{
+              padding: 10,
+              backgroundColor: "white",
+              marginHorizontal: 20,
+              marginTop: 10,
+              shadowOffset: { width: 0, height: 0 },
+              shadowColor: "black",
+              shadowOpacity: 0.2,
+              elevation: 1
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <Icon name="search" size={20} style={{ marginRight: 10 }} />
+              <TextInput
+                placeholder="Find a Restaurant"
+                placeholderTextColor="grey"
+                style={{ flex: 1, fontWeight: "700", backgroundColor: "white" }}
+                value={this.state.searchString}
+                onChangeText={destination =>
+                  this.onDestinationSearch(destination)
+                }
+              />
+            </View>
+            {predictions}
+          </View>
+        </View>
+      </SafeAreaView>
     );
   }
 }
 
 // bottom nav bar
-const TabNavigator = createBottomTabNavigator({
-  Home: HomeScreen,
-  Favorites: FavoriteScreen
+// const HomeTabNavigator = createBottomTabNavigator(
+//   {
+//     Home: HomeScreen,
+//     Favorites: FavoriteStackNavigator,
+//     Profile: ProfileStackNavigator
+//   },
+//   {
+//     navigationOptions: ({ navigation }) => {
+//       const { routeName } = navigation.state.routes[navigation.state.index];
+//       return {
+//         header: null,
+//         headerTitle: routeName
+//       };
+//     }
+//   }
+// );
+const HomeStackNavigator = createStackNavigator({
+  HomeTabNavigator: {
+    screen: HomeScreen
+  },
+  Details: {
+    screen: MarkerDetailsScreen
+  }
 });
 
-// creates container component
-const homeContainer = createAppContainer(TabNavigator);
-export default homeContainer;
+export default HomeStackNavigator;
 
 const styles = StyleSheet.create({
   container: {
