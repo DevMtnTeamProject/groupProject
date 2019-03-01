@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Image, Button, StyleSheet } from "react-native";
-import axios from "axios";
+
+// StyleSheet below component
 
 export default class NewReviewForm extends Component {
   constructor(props) {
@@ -70,16 +71,7 @@ export default class NewReviewForm extends Component {
             onChangeText={text => this.setState({ avoid: text })}
           />
         </View>
-        <Button title="Save" onPress={this.handleSave} />
-        <View>
-          {/* <Text>
-            {this.state.restaurantName}
-            {this.state.location}
-            {this.state.review}
-            {this.state.order}
-            {this.state.avoid}
-          </Text> */}
-        </View>
+        {/* <Button title="Save" onPress={this.handleSave} /> */}
       </View>
     );
   }
