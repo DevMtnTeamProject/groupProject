@@ -78,10 +78,10 @@ const styles = StyleSheet.create({
         color: 'red',
     },
     saveButton: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         backgroundColor: colors.eggshell,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-end',
+        alignItems: 'center',
+        justifyContent: 'center',
 
     },
 
