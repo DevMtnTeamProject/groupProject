@@ -4,7 +4,7 @@ import { AuthSession } from "expo";
 import GeneralStarExample from '../StarRating/star-rating';
 import { TextInput } from "react-native-gesture-handler";
 import SaveButton from '../SaveButton/save-button';
-import color from '../../styles/colors';
+import colors from '../../styles/colors';
 
 
 
@@ -34,28 +34,29 @@ export default class ReviewCard extends React.Component {
         }
 
         return (
+
+
             <View style={styles.container}>
-                <SaveButton
+                <SaveButton style={styles.saveButton}
                 />
-                <Text style={styles.displayRestaurant}
-                    value={this.props.restaurantName}
-                />
-                <GeneralStarExample ratingObj={ratingObj} />
-                <Text style={styles.displayTime}
+
+                <View style={styles.displayRestaurant} />
+                <GeneralStarExample ratingObj={ratingObj} style={styles.stars} />
+                {/* <Text style={styles.displayTime}
                     value={this.props.timeSinceReview}
-                />
-                <Text style={styles.displayDistance}
+                /> */}
+                {/* <Text style={styles.displayDistance}
                     value={this.props.location}
-                />
-                <Text style={styles.displayReview}
+                /> */}
+                {/* <Text style={styles.displayReview}
                     value={this.props.review}
-                />
-                <Text style={styles.displayRecommended}
+                /> */}
+                {/* <Text style={styles.displayRecommended}
                     value={this.props.order}
-                />
-                <Text style={styles.displayAvoid}
+                /> */}
+                {/* <Text style={styles.displayAvoid}
                     value={this.props.avoid}
-                />
+                /> */}
 
 
             </View>
@@ -66,26 +67,38 @@ export default class ReviewCard extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        paddingTop: 50,
+        height: 300,
+        backgroundColor: colors.eggshell,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: colors.eggshell,
+        paddingHorizontal: 12,
     },
+    title: {
+        fontSize: 19,
+        fontWeight: 'bold',
+    },
+    activeTitle: {
+        color: 'red',
+    },
+
     displayRestaurant: {
+        height: 10,
         flex: 2,
+        backgroundColor: colors.yellow,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+    saveButton: {
+
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
-    displayTime: {
+    stars: {
         flex: 3,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    },
-    displayDistance: {
-        flex: 4,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',

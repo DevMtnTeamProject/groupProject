@@ -24,13 +24,22 @@ import {
 import FavoriteStackNavigator from "./FavoriteScreen";
 import ProfileStackNavigator from "./ProfileScreen";
 import MarkerDetailsScreen from "./MarkerDetailsScreen";
+import colors from '../styles/colors';
 
 import { googleApiKey } from "../config";
+
 // TODO add permissions for user location
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    headerTitle: "EXPLORE"
+    headerTitle: "EXPLORE",
+    headerTintColor: colors.midgrey,
+    headerTitleStyle: {
+      fontWeight: "bold",
+      fontSize: 15,
+      letterSpacing: 3,
+    }
+
   };
 
   constructor(props) {
