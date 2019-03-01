@@ -8,10 +8,10 @@ import * as firebase from "firebase";
 import Icon from "@expo/vector-icons/EvilIcons";
 
 import store from "./store";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 import { firebaseConfig } from "./config";
 
-import LoadingScreen from "./screens/LoadingScreen";
+import connectedLoadingScreen from "./screens/LoadingScreen";
 import HomeStackNavigator from "./screens/HomeScreen";
 import ProfileStackNavigator from "./screens/ProfileScreen";
 import FavoriteStackNavigator from "./screens/FavoriteScreen";
@@ -81,7 +81,7 @@ const AppTabNavigator = createBottomTabNavigator(
 
 const AppSwitchNavigator = createSwitchNavigator(
   {
-    Loading: LoadingScreen,
+    Loading: connectedLoadingScreen,
     UserAuth: connectedFacebookAuth,
     Home: AppTabNavigator
   },
