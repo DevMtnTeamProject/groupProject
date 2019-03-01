@@ -184,25 +184,8 @@ class HomeScreen extends Component {
   }
 }
 
-// bottom nav bar
-// const HomeTabNavigator = createBottomTabNavigator(
-//   {
-//     Home: HomeScreen,
-//     Favorites: FavoriteStackNavigator,
-//     Profile: ProfileStackNavigator
-//   },
-//   {
-//     navigationOptions: ({ navigation }) => {
-//       const { routeName } = navigation.state.routes[navigation.state.index];
-//       return {
-//         header: null,
-//         headerTitle: routeName
-//       };
-//     }
-//   }
-// );
 const HomeStackNavigator = createStackNavigator({
-  HomeTabNavigator: {
+  Home: {
     screen: HomeScreen
   },
   Details: {

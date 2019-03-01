@@ -16,7 +16,6 @@ class ProfileScreen extends Component {
   };
 
   render() {
-    console.log("this.props.userName", this.props.userName);
     return (
       <View style={{ flex: 1 }}>
         <View
