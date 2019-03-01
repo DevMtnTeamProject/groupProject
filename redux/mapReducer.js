@@ -1,17 +1,24 @@
-const initialState = {};
+const initialState = {
+  userLocation: {
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.05
+  },
+  userMarkers: [],
+  friendReviewedMarkers: [],
+  searchString: "",
+  searchPredictionResults: [],
+  restaurantDetails: {}
+};
 
-const SAVE_REVIEW_COMPLETE = "SAVE_REVIEW_COMPLETE";
-const GET_FAV_LIST_COMPLETE = "GET_FAV_LIST_COMPLETE";
-const GET_FRIEND_LIST_COMPLETE = "GET_FRIEND_LIST_COMPLETE";
-const GET_USER_MAP_COMPLETE = "GET_USER_MAP_COMPLETE";
+// export const ON_REGION_CHANGE_SUCCESS = "ON_REGION_CHANGE_SUCCESS";
 
 const mapReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER_MAP_COMPLETE:
-      return;
     default:
       return state;
   }
 };
 
-export default reducer;
+export default mapReducer;
