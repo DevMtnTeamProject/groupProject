@@ -1,30 +1,14 @@
 import React, { Component } from "react";
-import {
-  SafeAreaView,
-  Platform,
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  Button
-} from "react-native";
+import { SafeAreaView, Platform, StyleSheet } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
-import Icon from "@expo/vector-icons/EvilIcons";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
 
-import {
-  createStackNavigator,
-  createAppContainer,
-  createBottomTabNavigator
-} from "react-navigation";
-import FavoriteStackNavigator from "./FavoriteScreen";
-import ProfileStackNavigator from "./ProfileScreen";
+import { createStackNavigator } from "react-navigation";
 import MarkerDetailsScreen from "./MarkerDetailsScreen";
-
+import SearchBar from "../components/SearchBar/SearchBar";
 import { googleApiKey } from "../config";
 // TODO add permissions for user location
 
@@ -37,12 +21,12 @@ class HomeScreen extends Component {
     super(props);
 
     this.state = {
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatLng: {
+        latitude: 0,
+        longitude: 0
+      },
       markers: [],
-      destination: "",
-      nearbyRestaurants: [],
-      predictions: []
+      nearbyRestaurants: []
     };
   }
 
@@ -97,36 +81,10 @@ class HomeScreen extends Component {
     }
   };
 
-  //  search by text
-  onDestinationSearch = async destination => {
-    const { userLatitude, userLongitude } = this.state;
-
-    this.setState({ destination });
-
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}
-    &input=${destination}&location=${userLatitude},${userLongitude}&radius=2000`;
-
-    try {
-      const result = await fetch(place_search_url);
-      const json = await result.json();
-      console.log("these are the prediction results", json.predictions);
-      this.setState({ predictions: json.predictions });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   render() {
-    const predictions = this.state.predictions.map(prediction => {
-      return (
-        <ScrollView>
-          <Text key={prediction.id}>{prediction.description}</Text>
-        </ScrollView>
-      );
-    });
     const region = {
-      latitude: this.state.userLatitude,
-      longitude: this.state.userLongitude,
+      latitude: this.state.userLatLng.latitude,
+      longitude: this.state.userLatLng.longitude,
       latitudeDelta: 0.1,
       longitudeDelta: 0.05
     };
@@ -151,34 +109,7 @@ class HomeScreen extends Component {
               />
             ))}
         </MapView>
-        <View style={{ position: "absolute", width: "100%" }}>
-          <View
-            style={{
-              padding: 10,
-              backgroundColor: "white",
-              marginHorizontal: 20,
-              marginTop: 10,
-              shadowOffset: { width: 0, height: 0 },
-              shadowColor: "black",
-              shadowOpacity: 0.2,
-              elevation: 1
-            }}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Icon name="search" size={20} style={{ marginRight: 10 }} />
-              <TextInput
-                placeholder="Find a Restaurant"
-                placeholderTextColor="grey"
-                style={{ flex: 1, fontWeight: "700", backgroundColor: "white" }}
-                value={this.state.searchString}
-                onChangeText={destination =>
-                  this.onDestinationSearch(destination)
-                }
-              />
-            </View>
-            {predictions}
-          </View>
-        </View>
+        <SearchBar userLatLng={this.state.userLatLng} />
       </SafeAreaView>
     );
   }
