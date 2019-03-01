@@ -37,11 +37,11 @@ export default class ReviewCard extends React.Component {
 
 
             <View style={styles.container}>
-                <SaveButton style={styles.saveButton}
+                <SaveButton style={styles.SaveButton}
                 />
 
-                <View style={styles.displayRestaurant} />
-                <GeneralStarExample ratingObj={ratingObj} style={styles.stars} />
+                {/* <View style={styles.displayRestaurant} /> */}
+                {/* <GeneralStarExample ratingObj={ratingObj} style={styles.stars} /> */}
                 {/* <Text style={styles.displayTime}
                     value={this.props.timeSinceReview}
                 /> */}
@@ -66,13 +66,9 @@ export default class ReviewCard extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingTop: 50,
-        height: 300,
+        flexDirection: 'row',
         backgroundColor: colors.eggshell,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: colors.eggshell,
-        paddingHorizontal: 12,
+
     },
     title: {
         fontSize: 19,
@@ -81,49 +77,49 @@ const styles = StyleSheet.create({
     activeTitle: {
         color: 'red',
     },
-
-    displayRestaurant: {
-        height: 10,
-        flex: 2,
-        backgroundColor: colors.yellow,
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    },
     saveButton: {
-
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    },
-    stars: {
-        flex: 3,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        backgroundColor: colors.eggshell,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
 
     },
-    displayReview: {
-        flex: 5,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
 
-    },
-    displayRecommended: {
-        flex: 6,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+    // displayRestaurant: {
 
-    },
-    displayAvoid: {
-        flex: 7,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+    //     // flex: 2,
+    //     backgroundColor: colors.yellow,
+    //     alignItems: 'flex-start',
+    //     justifyContent: 'center',
 
-    }
+    // },
+    // stars: {
+    //     flexDirection: 'row',
+    //     backgroundColor: '#fff',
+    //     alignItems: 'flex-start',
+    //     justifyContent: 'center',
+
+    // },
+    // displayReview: {
+    //     // flex: 5,
+    //     backgroundColor: '#fff',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+
+    // },
+    // displayRecommended: {
+    //     // flex: 6,
+    //     backgroundColor: '#fff',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+
+    // },
+    // displayAvoid: {
+    //     // flex: 7,
+    //     backgroundColor: '#fff',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+
+    // }
 });
 
