@@ -1,17 +1,22 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Image, Button, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
-import axios from "axios";
+import { View, Text, TextInput, Image, Button, StyleSheet } from "react-native";
+import { IP } from "../config";
 
 // StyleSheet below component
 
-export default class NewReviewForm extends Component {
+class NewReviewForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       restaurantName: "",
-      location: "",
+      latLng: {
+        latitude: "",
+        longitude: ""
+      },
+      address: "",
       review: "",
       order: "",
       avoid: "",
@@ -19,18 +24,32 @@ export default class NewReviewForm extends Component {
     };
   }
   // TODO: add function that will populate restaurant name & location if selected from map
-
+  // geocode address before saving to database
   // save to db & clear inputs
-  onSaveReview = () => {
-    // axios.post()
-    console.log("saved review");
+  onSaveReview = async () => {
+    const { authorId, userName } = this.props;
+    await fetch(`http://${IP}:4006/post-review/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ info: { ...this.state, authorId, userName } })
+    })
+      .then(response => {
+        console.log("save review response", response);
+      })
+      .catch(error => {
+        console.log("error saving new review", error);
+      });
   };
 
   render() {
     return (
       <View style={styles.container}>
+        <View style={{ flexDirection: "row" }}>
+          <Text>Write a Review</Text>
+          <Text>Add Photos</Text>
+        </View>
         <Text style={styles.header}>Write a Review</Text>
-        <TextInput
+        <TextInput // need to have this be a google places autocomplete
           name="name"
           value={this.state.restaurantName}
           placeholder="Restaurant Name"
@@ -38,7 +57,7 @@ export default class NewReviewForm extends Component {
           onChangeText={text => this.setState({ restaurantName: text })}
         />
         <TextInput
-          name="location"
+          name="location" // autopopulate with the google places autocomplete address response
           placeholder="Location"
           value={this.state.location}
           style={styles.input}
@@ -69,21 +88,22 @@ export default class NewReviewForm extends Component {
             onChangeText={text => this.setState({ avoid: text })}
           />
         </View>
-        <Button title="Save" onPress={this.handleSave} />
-        <View>
-          {/* <Text>
-            {this.state.restaurantName}
-            {this.state.location}
-            {this.state.review}
-            {this.state.order}
-            {this.state.avoid}
-          </Text> */}
-        </View>
+        <Button title="Save" onPress={this.onSaveReview} />
       </View>
     );
   }
 }
-AppRegistry.registerComponent("native-test-app", () => NewReviewForm);
+
+const mapStateToProps = state => {
+  const { id, userName } = state.userReducer.user;
+  return {
+    authorId: id,
+    userName: userName
+  };
+};
+
+const connectedNewReviewForm = connect(mapStateToProps)(NewReviewForm);
+export default connectedNewReviewForm;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import Reactotron from "./ReactotronConfig";
-import reducer from "./redux/reducer";
+import mapReducer from "./redux/mapReducer";
 import userReducer from "./redux/userReducer";
 import promiseMiddleware from "redux-promise-middleware";
 
 const store = Reactotron.createStore(
-  combineReducers({ reducer, userReducer }),
+  combineReducers({ mapReducer, userReducer }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
