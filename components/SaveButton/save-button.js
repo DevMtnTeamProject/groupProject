@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, View, TouchableOpacity } from 'react-native';
+// import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import colors from '../../styles/colors';
+import Icon from "@expo/vector-icons/EvilIcons";
 
 export default class SaveButton extends Component {
     constructor(props) {
         super(props);
         this.state = { pressStatus: false };
     }
-    _onPressButton() {
-        Alert.alert('Save')
-        // this.state({ pressStatus: true })
+    _onPressButton = () => {
+        if (this.state.pressStatus) {
+            Alert.alert('Remove')
+        } else {
+            Alert.alert('Save')
+        }
+        this.setState({ pressStatus: !this.state.pressStatus })
     }
 
     render() {
+
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity onPress={this._onPressButton} style={{ margin: 0, flex: 1, height: 30, backgroundColor: colors.yellow, justifyContent: 'center' }}>
+                    <TouchableOpacity onPress={this._onPressButton}
+                        style={this.state.pressStatus ? styles.buttonPress : styles.button}
+                    >
+                        <Icon name="checkmark-circle" color={colors.yellow} size={32} />
 
 
                     </TouchableOpacity>
                 </View>
-                {/* <View style={styles.buttonContainer}>
-                    <Button
-                        onPress={this._onPressButton}
-                        title="Save"
-                        color="#F4C900"
-                    />
-                </View> */}
+
 
             </View>
         );
@@ -39,29 +43,37 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
 
 
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
         height: 30,
         width: 30,
 
     },
-    buttonContainer: {
+    button: {
+        margin: 30,
+        flexDirection: 'row',
+        height: 30,
+        width: 30,
+        backgroundColor: colors.yellow,
+        justifyContent: 'center',
 
 
-
-        // backgroundColor: '#000000'
 
     },
-    // alternativeLayoutButtonContainer: {
-    //     margin: 20,
-    //     flex: 2,
-    //     flexDirection: 'row',
-    //     justifyContent: 'space-between',
-    //     backgroundColor: '#000000'
 
-    // }
+    buttonPress: {
+        margin: 30,
+        flexDirection: 'row',
+        height: 30,
+        width: 30,
+        backgroundColor: colors.eggshell,
+        justifyContent: 'center',
+
+
+
+    },
 });
 
 

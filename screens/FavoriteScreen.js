@@ -18,7 +18,7 @@ class FavoriteScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={{  flexDirection:"row", justifyContent:"flext-start",  }}>
         <Text></Text>
         <ReviewCard />
       </View>
