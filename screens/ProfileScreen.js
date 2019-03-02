@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Button } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import { connect } from "react-redux";
 import Icon from "@expo/vector-icons/Ionicons";
+import firebase from "firebase";
 import {
   fetchUser,
   fetchUserSuccess,
@@ -49,6 +50,21 @@ class ProfileScreen extends Component {
             <Icon name="ios-add" size={24} />
             <Text style={{ marginLeft: 7 }}>Write A Review</Text>
           </TouchableOpacity>
+          <Button
+            title="Log Out"
+            onPress={() =>
+              firebase
+                .auth()
+                .signOut()
+                .then(response => {
+                  this.props.navigation.navigate("UserAuth");
+                })
+                .catch(error => {
+                  console.log(error);
+                  // An error happened
+                })
+            }
+          />
         </View>
       </View>
     );

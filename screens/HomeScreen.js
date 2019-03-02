@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SafeAreaView, Platform, StyleSheet } from "react-native";
+import { SafeAreaView, View, Platform, StyleSheet } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
 
@@ -53,15 +53,17 @@ class HomeScreen extends Component {
   _getLocationAsync = async () => {
     let location = await Location.getCurrentPositionAsync({});
     this.setState({
-      userLatitude: location.coords.latitude,
-      userLongitude: location.coords.longitude
+      userLatLng: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
     });
     !!location && this.getRestaurantsNearby();
   };
 
   getRestaurantsNearby = async () => {
-    const { userLatitude, userLongitude } = this.state;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
+    const { latitude, longitude } = this.state.userLatLng;
+    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
 
     try {
       const nearbyResults = await fetch(nearby_api_url);

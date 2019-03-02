@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { googleApiKey } from "../../config";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  SectionList,
-  Text
-} from "react-native";
+import { View, TextInput, TouchableOpacity, Text } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -24,8 +18,7 @@ export default class SearchBar extends Component {
     const { latitude, longitude } = this.props.userLatLng;
     this.setState({ searchString });
 
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}
-    &input=${searchString}&location=${latitude},${longitude}&radius=2000`;
+    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}&input=${searchString}&types=establishment&location=${latitude},${longitude}&radius=500`;
 
     try {
       const result = await fetch(place_search_url);
@@ -51,7 +44,7 @@ export default class SearchBar extends Component {
             flexDirection: "row",
             marginTop: 5
           }}
-          onPress={prediction => this.onDestinationSelect(prediction)}
+          onPress={this.props.onPress}
         >
           <Text
             style={{

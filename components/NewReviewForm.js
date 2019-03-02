@@ -11,8 +11,12 @@ class NewReviewForm extends Component {
     super(props);
 
     this.state = {
-      // restaurantName: "",
-      location: "",
+      restaurantName: "",
+      latLng: {
+        latitude: "",
+        longitude: ""
+      },
+      address: "",
       review: "",
       order: "",
       avoid: "",
