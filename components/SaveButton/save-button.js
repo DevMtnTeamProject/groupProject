@@ -3,8 +3,13 @@ import { Alert, Button, StyleSheet, View, TouchableOpacity } from 'react-native'
 import colors from '../../styles/colors';
 
 export default class SaveButton extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { pressStatus: false };
+    }
     _onPressButton() {
         Alert.alert('Save')
+        // this.state({ pressStatus: true })
     }
 
     render() {
@@ -12,7 +17,7 @@ export default class SaveButton extends Component {
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity onPress={this._onPressButton} style={{ margin: 0, flex: 1, height: 30, backgroundColor: colors.yellow, justifyContent: 'center' }}>
-                        {/* onPress={this._onPressButton} */}
+
 
                     </TouchableOpacity>
                 </View>
