@@ -8,13 +8,15 @@ import {
   fetchUserFailure
 } from "../redux/actions";
 
+import { IP } from "../config";
+
 class FacebookAuth extends Component {
   constructor(props) {
     super(props);
   }
   _handlePressAsync = async () => {
-    this.props.fetchUser();
-    const appId = Expo.Constants.manifest.extra.facebook.appId;
+    // this.props.fetchUser();
+    const appId = Expo.Constants.manifest.facebookAppId;
     const permissions = ["public_profile", "email"]; // Permissions required, consult Facebook docs
 
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(

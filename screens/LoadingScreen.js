@@ -14,8 +14,10 @@ class LoadingScreen extends Component {
   }
   checkIfLoggedIn = async () => {
     firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
       if (user !== null) {
-        const { uid, displayName, photoURL } = user;
+        console.log("user.providerData[0]", user.providerData[0]);
+        const { uid, displayName, photoURL } = user.providerData[0];
         const userProfile = {
           id: uid,
           userName: displayName,
