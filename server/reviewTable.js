@@ -10,6 +10,7 @@ const reviewSchema = mongoose.Schema({
         restaurantId: String,
         authorId: String,
         userName: String,
+        image: Array
     }
 })
 
