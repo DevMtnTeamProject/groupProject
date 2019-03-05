@@ -8,3 +8,4 @@ npm-debug.*
 .env
 config.js
 app.json
+server/.env
