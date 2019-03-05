@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IS_FETCHING, FETCHING_SUCCESS, FETCHING_FAILURE } from "./userReducer";
+import { FETCH_USER_LATLNG_SUCCESS } from "./mapReducer";
 
 // ACTION CREATORS
 
@@ -19,6 +20,13 @@ export function fetchUserFailure(err) {
   return {
     type: FETCHING_FAILURE,
     payload: err
+  };
+}
+
+export function fetchUserLocation(LatLng) {
+  return {
+    type: FETCH_USER_LATLNG_SUCCESS,
+    payload: LatLng
   };
 }
 export function saveReview({ review }) {
