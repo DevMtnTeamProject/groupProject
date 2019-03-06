@@ -10,6 +10,7 @@ import {
   fetchUserFailure
 } from "../redux/actions";
 import NewReviewForm from "../components/NewReviewForm";
+import MyReviews from "./MyReviews";
 
 class ProfileScreen extends Component {
   static navigationOptions = {
@@ -49,6 +50,19 @@ class ProfileScreen extends Component {
           >
             <Icon name="ios-add" size={24} />
             <Text style={{ marginLeft: 7 }}>Write A Review</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("MyReviews")}
+            style={{
+              width: 200,
+              flexDirection: "row",
+              fontSize: 12,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Icon name="ios-add" size={24} />
+            <MyReviews />
           </TouchableOpacity>
           <Button
             title="Log Out"
@@ -92,7 +106,8 @@ const connectedProfileScreen = connect(
 
 const ProfileStackNavigator = createStackNavigator({
   Profile: connectedProfileScreen,
-  NewReview: NewReviewForm
+  NewReview: NewReviewForm,
+  MyReviews: MyReviews
 });
 
 export default ProfileStackNavigator;

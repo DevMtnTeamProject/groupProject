@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { View, Text, TouchableOpacity, Image, Button } from "react-native";
+import { createStackNavigator } from "react-navigation";
+import { connect } from "react-redux";
 
 class MyReviews extends Component {
   static navigationOptions = {
@@ -9,14 +12,9 @@ class MyReviews extends Component {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>My Reviews</Text>
-        <ReviewCard />
       </View>
     );
   }
 }
 
-const MyReviewsStackNavigator = createStackNavigator({
-  myReviews: myReviews
-});
-
-export default MyReviewsStackNavigator;
+export default MyReviews;
