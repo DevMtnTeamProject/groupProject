@@ -6,7 +6,6 @@ npm-debug.*
 *.key
 *.mobileprovision
 .env
-./components/Map/key
 config.js
 app.json
-
+server/.env

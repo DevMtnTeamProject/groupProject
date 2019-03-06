@@ -1,48 +1,37 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchUserLocation } from "../redux/actions";
 import {
   SafeAreaView,
-  Platform,
   View,
-  Text,
-  TextInput,
+  Platform,
   StyleSheet,
-  ScrollView,
-  Button
+  ActivityIndicator
 } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
-import Icon from "@expo/vector-icons/EvilIcons";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import mapstyles from "../components/Map/mapstyles.json";
 
-import {
-  createStackNavigator,
-  createAppContainer,
-  createBottomTabNavigator
-} from "react-navigation";
-import FavoriteStackNavigator from "./FavoriteScreen";
-import ProfileStackNavigator from "./ProfileScreen";
+import { createStackNavigator } from "react-navigation";
 import MarkerDetailsScreen from "./MarkerDetailsScreen";
-
+import SearchBar from "../components/SearchBar/SearchBar";
 import { googleApiKey } from "../config";
-// TODO add permissions for user location
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    headerTitle: "EXPLORE"
+    header: null
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      userLatitude: 0,
-      userLongitude: 0,
+      isLoading: false,
       markers: [],
-      destination: "",
       nearbyRestaurants: [],
-      predictions: []
+      googlePredictions: []
     };
   }
 
@@ -62,23 +51,24 @@ class HomeScreen extends Component {
       this._getLocationAsync();
     }
   };
-
   onRegionChange = region => {
     this.setState({ region });
   };
 
   _getLocationAsync = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    this.setState({
-      userLatitude: location.coords.latitude,
-      userLongitude: location.coords.longitude
-    });
+    const LatLng = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    };
+    this.props.fetchUserLocation(LatLng);
+
     !!location && this.getRestaurantsNearby();
   };
 
   getRestaurantsNearby = async () => {
-    const { userLatitude, userLongitude } = this.state;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
+    const { latitude, longitude } = this.props.userLocation;
+    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
 
     try {
       const nearbyResults = await fetch(nearby_api_url);
@@ -98,38 +88,12 @@ class HomeScreen extends Component {
     }
   };
 
-  //  search by text
-  onDestinationSearch = async destination => {
-    const { userLatitude, userLongitude } = this.state;
-
-    this.setState({ destination });
-
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}
-    &input=${destination}&location=${userLatitude},${userLongitude}&radius=2000`;
-
-    try {
-      const result = await fetch(place_search_url);
-      const json = await result.json();
-      console.log("these are the prediction results", json.predictions);
-      this.setState({ predictions: json.predictions });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   render() {
-    const predictions = this.state.predictions.map(prediction => {
-      return (
-        <ScrollView>
-          <Text key={prediction.id}>{prediction.description}</Text>
-        </ScrollView>
-      );
-    });
     const region = {
-      latitude: this.state.userLatitude,
-      longitude: this.state.userLongitude,
-      latitudeDelta: 0.1,
-      longitudeDelta: 0.05
+      latitude: this.props.userLocation.latitude,
+      longitude: this.props.userLocation.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.09
     };
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -152,59 +116,28 @@ class HomeScreen extends Component {
               />
             ))}
         </MapView>
-        <View style={{ position: "absolute", width: "100%" }}>
-          <View
-            style={{
-              padding: 10,
-              backgroundColor: "white",
-              marginHorizontal: 20,
-              marginTop: 10,
-              shadowOffset: { width: 0, height: 0 },
-              shadowColor: "black",
-              shadowOpacity: 0.2,
-              elevation: 1
-            }}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Icon name="search" size={20} style={{ marginRight: 10 }} />
-              <TextInput
-                placeholder="Find a Restaurant"
-                placeholderTextColor="grey"
-                style={{ flex: 1, fontWeight: "700", backgroundColor: "white" }}
-                value={this.state.searchString}
-                onChangeText={destination =>
-                  this.onDestinationSearch(destination)
-                }
-              />
-            </View>
-            {predictions}
-          </View>
-        </View>
+        <SearchBar userLatLng={this.props.userLocation} />
       </SafeAreaView>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    userLocation: state.mapReducer.userLatLng
+  };
+};
+const mapActionsToProps = {
+  fetchUserLocation
+};
 
-// bottom nav bar
-// const HomeTabNavigator = createBottomTabNavigator(
-//   {
-//     Home: HomeScreen,
-//     Favorites: FavoriteStackNavigator,
-//     Profile: ProfileStackNavigator
-//   },
-//   {
-//     navigationOptions: ({ navigation }) => {
-//       const { routeName } = navigation.state.routes[navigation.state.index];
-//       return {
-//         header: null,
-//         headerTitle: routeName
-//       };
-//     }
-//   }
-// );
+const connectedHomeScreen = connect(
+  mapStateToProps,
+  mapActionsToProps
+)(HomeScreen);
+
 const HomeStackNavigator = createStackNavigator({
-  HomeTabNavigator: {
-    screen: HomeScreen
+  Home: {
+    screen: connectedHomeScreen
   },
   Details: {
     screen: MarkerDetailsScreen
