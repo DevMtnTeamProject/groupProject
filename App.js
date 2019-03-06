@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import * as firebase from "firebase";
-import Icon from "@expo/vector-icons/EvilIcons";
+import Icon from "@expo/vector-icons/Ionicons";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -42,7 +42,7 @@ const AppTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="search" color={tintColor} size={32} />;
+          return <Icon name="ios-search" color={tintColor} size={25} />;
         }
       }
     },
@@ -51,7 +51,7 @@ const AppTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="heart" color={tintColor} size={32} />;
+          return <Icon name="ios-heart" color={tintColor} size={25} />;
         }
       }
     },
@@ -60,7 +60,7 @@ const AppTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="user" color={tintColor} size={32} />;
+          return <Icon name="ios-contact" color={tintColor} size={25} />;
         }
       }
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, View, TouchableOpacity } from 'react-native';
 // import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import colors from '../../styles/colors';
-import Icon from "@expo/vector-icons/EvilIcons";
+import Icon from "@expo/vector-icons/Ionicons";
 
 export default class SaveButton extends Component {
     constructor(props) {
@@ -22,11 +22,11 @@ export default class SaveButton extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row' }}>
+                <View >
                     <TouchableOpacity onPress={this._onPressButton}
                         style={this.state.pressStatus ? styles.buttonPress : styles.button}
                     >
-                        <Icon name="checkmark-circle" color={colors.yellow} size={32} />
+                        <Icon name="ios-close" color={colors.midgrey} size={32} />
 
 
                     </TouchableOpacity>
@@ -44,32 +44,38 @@ const styles = StyleSheet.create({
 
 
 
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'baseline',
         height: 30,
         width: 30,
 
     },
     button: {
-        margin: 30,
+
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'baseline',
         height: 30,
         width: 30,
-        backgroundColor: colors.yellow,
-        justifyContent: 'center',
+        borderColor: colors.midgrey,
+        borderWidth: 2,
+        borderRadius: 50,
 
 
 
     },
 
     buttonPress: {
-        margin: 30,
+
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         height: 30,
         width: 30,
-        backgroundColor: colors.eggshell,
-        justifyContent: 'center',
+        backgroundColor: colors.warmgrey,
+        borderRadius: 50,
+
 
 
 
