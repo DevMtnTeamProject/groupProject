@@ -11,14 +11,18 @@ export default class SearchBar extends Component {
     this.state = {
       searchString: "",
       googlePredictions: [],
-      selectedDestination: {}
+      selectedDestination: {},
+      destinationDetails: {}
     };
   }
+  // search by keyword or name
   onDestinationSearch = async searchString => {
     const { latitude, longitude } = this.props.userLatLng;
-    this.setState({ searchString });
+    const params = {};
 
-    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}&input=${searchString}&types=establishment&location=${latitude},${longitude}&radius=500`;
+    this.setState({ searchString });
+    console.log("latitude", latitude, "longitude", longitude);
+    const place_search_url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googleApiKey}&input=${searchString}&types=establishment&location=${latitude},${longitude}&radius=2000`;
 
     try {
       const result = await fetch(place_search_url);
@@ -32,7 +36,7 @@ export default class SearchBar extends Component {
 
   onDestinationSelect = prediction => {
     console.log("selected prediction", prediction);
-    this.setState({ selectedDestination: prediction });
+    this.setState({ selectedDestination: prediction, searchString: "" });
   };
 
   render() {
@@ -58,7 +62,7 @@ export default class SearchBar extends Component {
       );
     });
     return (
-      <View style={{ position: "absolute", width: "100%" }}>
+      <View style={{ position: "absolute", width: "100%", marginTop: 30 }}>
         <View
           style={{
             padding: 10,

@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { SafeAreaView, View, Platform, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { fetchUserLocation } from "../redux/actions";
+import {
+  SafeAreaView,
+  View,
+  Platform,
+  StyleSheet,
+  ActivityIndicator
+} from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
 import colors from '../styles/colors'
@@ -11,6 +19,7 @@ import { createStackNavigator } from "react-navigation";
 import MarkerDetailsScreen from "./MarkerDetailsScreen";
 import SearchBar from "../components/SearchBar/SearchBar";
 import { googleApiKey } from "../config";
+<<<<<<< HEAD
 
 // TODO add permissions for user location
 
@@ -24,18 +33,22 @@ class HomeScreen extends Component {
       letterSpacing: 3,
     }
 
+=======
+
+class HomeScreen extends Component {
+  static navigationOptions = {
+    header: null
+>>>>>>> c317cebd8a56dde02a6f763515af7ad1f4918fee
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      userLatLng: {
-        latitude: 0,
-        longitude: 0
-      },
+      isLoading: false,
       markers: [],
-      nearbyRestaurants: []
+      nearbyRestaurants: [],
+      googlePredictions: []
     };
   }
 
@@ -61,17 +74,17 @@ class HomeScreen extends Component {
 
   _getLocationAsync = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    this.setState({
-      userLatLng: {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-      }
-    });
+    const LatLng = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    };
+    this.props.fetchUserLocation(LatLng);
+
     !!location && this.getRestaurantsNearby();
   };
 
   getRestaurantsNearby = async () => {
-    const { latitude, longitude } = this.state.userLatLng;
+    const { latitude, longitude } = this.props.userLocation;
     const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
 
     try {
@@ -94,10 +107,10 @@ class HomeScreen extends Component {
 
   render() {
     const region = {
-      latitude: this.state.userLatLng.latitude,
-      longitude: this.state.userLatLng.longitude,
-      latitudeDelta: 0.1,
-      longitudeDelta: 0.05
+      latitude: this.props.userLocation.latitude,
+      longitude: this.props.userLocation.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.09
     };
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -120,15 +133,28 @@ class HomeScreen extends Component {
               />
             ))}
         </MapView>
-        <SearchBar userLatLng={this.state.userLatLng} />
+        <SearchBar userLatLng={this.props.userLocation} />
       </SafeAreaView>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    userLocation: state.mapReducer.userLatLng
+  };
+};
+const mapActionsToProps = {
+  fetchUserLocation
+};
+
+const connectedHomeScreen = connect(
+  mapStateToProps,
+  mapActionsToProps
+)(HomeScreen);
 
 const HomeStackNavigator = createStackNavigator({
   Home: {
-    screen: HomeScreen
+    screen: connectedHomeScreen
   },
   Details: {
     screen: MarkerDetailsScreen
