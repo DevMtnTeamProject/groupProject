@@ -9,7 +9,7 @@ const reviewSchema = mongoose.Schema({
         avoid: String,
         restaurantId: String,
         authorId: String,
-        userName: String,
+        userName: {type: Schema.Types.ObjectId, ref: 'Review'},
         image: Array
     }
 })
