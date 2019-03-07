@@ -2,15 +2,14 @@ const mongoose = require('mongoose')
 
 const reviewSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    createdOn: String,
+    createdOn: Date,
+    fbID: String,
     info: {
         review: String,
         order: String,
         avoid: String,
         restaurantId: String,
-        authorId: String,
-        userName: {type: Schema.Types.ObjectId, ref: 'Review'},
-        image: Array
+        image: [{img:String}]
     }
 })
 
