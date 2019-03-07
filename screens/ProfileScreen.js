@@ -10,10 +10,18 @@ import {
   fetchUserFailure
 } from "../redux/actions";
 import NewReviewForm from "../components/NewReviewForm";
+import colors from '../styles/colors';
+
 
 class ProfileScreen extends Component {
   static navigationOptions = {
-    headerTitle: "PROFILE"
+    headerTitle: "PROFILE",
+    headerTintColor: colors.midgrey,
+    headerTitleStyle: {
+      fontWeight: "bold",
+      fontSize: 15,
+      letterSpacing: 3,
+    }
   };
 
   render() {

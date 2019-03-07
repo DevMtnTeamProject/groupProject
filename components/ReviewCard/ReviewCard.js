@@ -4,6 +4,7 @@ import { AuthSession } from "expo";
 import GeneralStarExample from '../StarRating/star-rating';
 import { TextInput } from "react-native-gesture-handler";
 import SaveButton from '../SaveButton/save-button';
+import colors from '../../styles/colors';
 
 
 
@@ -33,28 +34,33 @@ export default class ReviewCard extends React.Component {
         }
 
         return (
+
+
             <View style={styles.container}>
-                <SaveButton
-                />
-                <Text style={styles.displayRestaurant}
-                    value={this.props.restaurantName}
-                />
-                <GeneralStarExample ratingObj={ratingObj} />
-                <Text style={styles.displayTime}
+                <SaveButton />
+
+                <View>
+                    <Text style={styles.displayRestaurant}>Restaurant Name Goes Here</Text>
+                </View>
+                <View>
+                    <GeneralStarExample ratingObj={ratingObj} style={styles.stars} />
+                </View>
+
+                {/* <Text style={styles.displayTime}
                     value={this.props.timeSinceReview}
-                />
-                <Text style={styles.displayDistance}
+                /> */}
+                {/* <Text style={styles.displayDistance}
                     value={this.props.location}
-                />
-                <Text style={styles.displayReview}
+                /> */}
+                {/* <Text style={styles.displayReview}
                     value={this.props.review}
-                />
-                <Text style={styles.displayRecommended}
+                /> */}
+                {/* <Text style={styles.displayRecommended}
                     value={this.props.order}
-                />
-                <Text style={styles.displayAvoid}
+                /> */}
+                {/* <Text style={styles.displayAvoid}
                     value={this.props.avoid}
-                />
+                /> */}
 
 
             </View>
@@ -64,52 +70,74 @@ export default class ReviewCard extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        justifyContent: 'center',
+        height: 250,
+        backgroundColor: colors.white,
+        padding: 10,
+        marginBottom: 10,
+
+
+
+
     },
+    title: {
+        fontSize: 19,
+        fontWeight: 'bold',
+    },
+    activeTitle: {
+        color: 'red',
+    },
+
+
     displayRestaurant: {
-        flex: 2,
-        backgroundColor: '#fff',
+
+        flexDirection: 'row',
+        // height: 30,
+        width: 300,
+        justifyContent: 'space-between',
         alignItems: 'center',
-        justifyContent: 'center',
+        fontSize: 15,
+        fontWeight: "bold",
+        letterSpacing: 1,
+        padding: 0,
+        borderWidth: 0,
+        textAlign: 'right',
+
+
+
 
     },
-    displayTime: {
-        flex: 3,
-        backgroundColor: '#fff',
-        alignItems: 'center',
+    stars: {
+        flexDirection: 'row',
+        backgroundColor: colors.yellow,
         justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        height: 4,
 
     },
-    displayDistance: {
-        flex: 4,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+    // displayReview: {
+    //     // flex: 5,
+    //     backgroundColor: '#fff',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
 
-    },
-    displayReview: {
-        flex: 5,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+    // },
+    // displayRecommended: {
+    //     // flex: 6,
+    //     backgroundColor: '#fff',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
 
-    },
-    displayRecommended: {
-        flex: 6,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+    // },
+    // displayAvoid: {
+    //     // flex: 7,
+    //     backgroundColor: '#fff',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
 
-    },
-    displayAvoid: {
-        flex: 7,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    }
+    // }
 });
 
