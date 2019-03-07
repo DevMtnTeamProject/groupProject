@@ -16,6 +16,7 @@ import HomeStackNavigator from "./screens/HomeScreen";
 import ProfileStackNavigator from "./screens/ProfileScreen";
 import FavoriteStackNavigator from "./screens/FavoriteScreen";
 import connectedFacebookAuth from "./screens/FacebookAuth";
+import colors from "./styles/colors";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 if (!firebase.apps.length) {

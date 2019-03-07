@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     backgroundColor: colors.eggshell,
+    padding: 10,
 
 
   },

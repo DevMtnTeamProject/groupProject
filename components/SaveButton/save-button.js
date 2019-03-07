@@ -27,13 +27,10 @@ export default class SaveButton extends Component {
                         style={this.state.pressStatus ? styles.buttonPress : styles.button}
                     >
                         <Icon name="ios-close" color={colors.midgrey} size={32} style={{
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
                             width: 30,
                             height: 30,
+                            textAlign: 'center',
                             marginBottom: 3,
-                            marginLeft: 18,
                         }} />
 
 
@@ -52,12 +49,10 @@ const styles = StyleSheet.create({
 
 
 
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
+
         height: 30,
         width: 30,
-        marginTop: 15,
+        marginTop: 5,
         marginLeft: 5,
 
 

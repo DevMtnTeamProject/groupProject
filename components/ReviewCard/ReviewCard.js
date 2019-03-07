@@ -39,8 +39,8 @@ export default class ReviewCard extends React.Component {
             <View style={styles.container}>
                 <SaveButton />
 
-                <View style={styles.displayRestaurant}>
-                    <Text style={styles.displayRestaurant}>RESTAURANT NAME GOES HERE</Text>
+                <View>
+                    <Text style={styles.displayRestaurant}>Restaurant Name Goes Here</Text>
                 </View>
                 <View>
                     <GeneralStarExample ratingObj={ratingObj} style={styles.stars} />
@@ -75,7 +75,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 250,
         backgroundColor: colors.white,
-        margin: 10,
+        padding: 10,
+        marginBottom: 10,
+
 
 
 
@@ -94,20 +96,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         // height: 30,
         width: 300,
-        alignItems: 'center',
         justifyContent: 'space-between',
+        alignItems: 'center',
         fontSize: 15,
-        letterSpacing: 3,
-        padding: 8
+        fontWeight: "bold",
+        letterSpacing: 1,
+        padding: 0,
+        borderWidth: 0,
+        textAlign: 'right',
+
 
 
 
     },
     stars: {
-        flex: 2,
-        backgroundColor: '#fff',
-        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: colors.yellow,
         justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        height: 4,
 
     },
     // displayReview: {
