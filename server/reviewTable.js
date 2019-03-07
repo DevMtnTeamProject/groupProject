@@ -9,11 +9,13 @@ const reviewSchema = mongoose.Schema({
     order: String,
     avoid: String,
     authorId: String,
-    userName: String,
+
     image: Array,
     location: String,
     latLng: Object,
-    place_id: String
+    place_id: String,
+
+    userName: { type: mongoose.Schema.Types.ObjectId, ref: "Review" }
   }
 });
 
