@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchUserLocation } from "../redux/actions";
-import {
-  SafeAreaView,
-  View,
-  Platform,
-  StyleSheet,
-  ActivityIndicator
-} from "react-native";
+import { SafeAreaView, View, Platform } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
 
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import mapstyles from "../components/Map/mapstyles.json";
-
 import { createStackNavigator } from "react-navigation";
+import Map from "../components/Map/Map";
 import MarkerDetailsScreen from "./MarkerDetailsScreen";
 import SearchBar from "../components/SearchBar/SearchBar";
 import { googleApiKey } from "../config";
@@ -28,10 +20,7 @@ class HomeScreen extends Component {
     super(props);
 
     this.state = {
-      isLoading: false,
-      markers: [],
-      nearbyRestaurants: [],
-      googlePredictions: []
+      isLoading: true
     };
   }
 
@@ -48,75 +37,31 @@ class HomeScreen extends Component {
     if (status !== "granted") {
       console.log("error getting location permission", error);
     } else {
-      this._getLocationAsync();
+      this.getUserLocation();
     }
   };
-  onRegionChange = region => {
-    this.setState({ region });
-  };
 
-  _getLocationAsync = async () => {
+  getUserLocation = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    const LatLng = {
+
+    let LatLng = {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude
     };
+
     this.props.fetchUserLocation(LatLng);
-
-    !!location && this.getRestaurantsNearby();
-  };
-
-  getRestaurantsNearby = async () => {
-    const { latitude, longitude } = this.props.userLocation;
-    const nearby_api_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&types=restaurant&rankedby=distance&key=${googleApiKey}`;
-
-    try {
-      const nearbyResults = await fetch(nearby_api_url);
-      const json = await nearbyResults.json();
-      const restaurantArr = json.results.map(r => ({
-        place_id: r.place_id,
-        latLng: {
-          latitude: r.geometry.location.lat,
-          longitude: r.geometry.location.lng
-        },
-        name: r.name,
-        address: r.vicinity
-      }));
-      this.setState({ nearbyRestaurants: restaurantArr });
-    } catch (err) {
-      console.error(err);
-    }
+    console.log("this.props.userLocation", this.props.userLocation);
   };
 
   render() {
-    const region = {
-      latitude: this.props.userLocation.latitude,
-      longitude: this.props.userLocation.longitude,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.09
-    };
+    console.log("this is props userLocation", this.props.userLocation);
+
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <MapView
-          region={region}
-          style={styles.map}
-          customMapStyle={mapstyles}
-          provider={PROVIDER_GOOGLE}
-          showsUserLocation={true}
-          onRegionChange={this._getLocationAsync}
-        >
-          {!!this.state.nearbyRestaurants &&
-            !!this.state.nearbyRestaurants.length &&
-            this.state.nearbyRestaurants.map(r => (
-              <Marker
-                key={r.place_id}
-                coordinate={r.latLng}
-                title={r.name}
-                description={r.address}
-              />
-            ))}
-        </MapView>
-        <SearchBar userLatLng={this.props.userLocation} />
+        <Map />
+        <View>
+          <SearchBar userLatLng={this.props.userLocation} />
+        </View>
       </SafeAreaView>
     );
   }
@@ -145,37 +90,3 @@ const HomeStackNavigator = createStackNavigator({
 });
 
 export default HomeStackNavigator;
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    // height: 400,
-    // width: 400,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flex: 1
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject
-  },
-  calloutView: {
-    flexDirection: "row",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    borderRadius: 10,
-    width: "40%",
-    marginLeft: "30%",
-    marginRight: "30%",
-    marginTop: 20
-  },
-  textInput: {
-    position: "absolute",
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
-    height: 40,
-    minWidth: 350,
-    borderWidth: 1,
-    paddingHorizontal: 16,
-    backgroundColor: "white"
-  }
-});
