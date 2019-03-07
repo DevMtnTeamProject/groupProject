@@ -103,7 +103,6 @@ app.post("/add-favorite/", (req, res, next) => {
           favoritesList: [...doc.info.favoritesList, favObj]
         }
       }
-      
         LoginUser.findByIdAndUpdate(
           { _id: req.body._id },
           updateObj,
@@ -137,6 +136,43 @@ app.post("/add-favorite/", (req, res, next) => {
 //     }
 //   );
 // });
+
+//Can now add to following list. still need to have user show up in other's following list
+app.post('/add-to-follow-list',(req,res,next)=>{
+  const newFriend ={
+    addedDate: Date.now(),
+    fbID: req.body.fbID,
+    name: req.body.userName
+  }
+  LoginUser.findById(req.body._id)
+    .exec()
+    .then(_doc => {
+      doc = _doc.toObject()
+      const updateObj = 
+      {
+        ...doc,
+        info: {
+          ...doc.info,
+          following: [...doc.info.following, newFriend]
+        }
+      }
+      LoginUser.findByIdAndUpdate(
+        { _id: req.body._id },
+        updateObj,
+        {new: true},
+        function(err, result) {
+          if (err) {
+            console.log('this is err', err);
+          } else {
+            console.log('this is result', result)
+            res.status(200).send(result)
+
+          }
+        }
+      );
+  });
+});
+        
 
 app.listen(PORT, () => {
   console.log(`Nothing like a good ${PORT} wine`);

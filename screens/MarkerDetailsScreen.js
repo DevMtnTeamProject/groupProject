@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 
+// TODO
+// Component
 export default class MarkerDetailsScreen extends Component {
   render() {
     return (
