@@ -35,8 +35,8 @@ class MyReviews extends Component {
     //   ))
     const mockData = {
       review: "this is the review",
-      order: "??",
-      avoid: "dont eat this",
+      order: "recommended dish",
+      avoid: "dish to avoid",
       // restaurantId: String,
       // authorId: String,
       userName: "adam",
@@ -46,6 +46,7 @@ class MyReviews extends Component {
       <View style={{ flex: 1, marginTop: 20, alignItems: "center" }}>
         <Text>My Reviews</Text>
         <Text>{mockData.review}</Text>
+        <Text />
       </View>
     );
   }

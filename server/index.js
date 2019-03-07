@@ -62,6 +62,7 @@ app.get("/review/:id", (req, res, next) => {
     });
 });
 
+//get reviews for user
 app.get("/get-reviews/:id", (req, res, next) => {
   const id = req.params.id;
   Review.findById(id)

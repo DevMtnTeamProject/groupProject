@@ -16,11 +16,12 @@ class NewReviewForm extends Component {
         latitude: "",
         longitude: ""
       },
-      address: "",
+      location: "",
       review: "",
       order: "",
       avoid: "",
-      photos: []
+      photos: [],
+      place_id: ""
     };
   }
   // TODO: add function that will populate restaurant name & location if selected from map
