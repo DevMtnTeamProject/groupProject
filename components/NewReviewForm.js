@@ -32,7 +32,9 @@ class NewReviewForm extends Component {
     await fetch(`http://${IP}:4006/post-review/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ info: { ...this.state, authorId, userName } })
+      body: JSON.stringify({
+        info: { ...this.state, fbID: this.props._id, userName }
+      })
     })
       .then(response => {
         console.log("save review response", response);
@@ -98,7 +100,7 @@ class NewReviewForm extends Component {
 const mapStateToProps = state => {
   const { id, userName } = state.userReducer.user;
   return {
-    authorId: id,
+    _id: id,
     userName: userName
   };
 };

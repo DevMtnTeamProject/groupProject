@@ -75,14 +75,37 @@ app.get("/get-reviews/:id", (req, res, next) => {
 
 //posts review
 app.post("/post-review/", (req, res, next) => {
-  const review = new Review({
-    _id: new mongoose.Types.ObjectId(),
-    createdOn: Date.now(),
-    info: req.body.info
-  });
-  review.save().then(result => {
-    res.status(200).send(result);
-  });
+  const obj = {
+    fbID: req.body.fbID,
+    info: req.body.info,
+    createdOn: Date.now()
+  };
+  LoginUser.findById(req.body._id)
+    .exec()
+    .then(_doc => {
+      console.log("this is doc", _doc);
+      const doc = _doc.toObject();
+      const updateObj = {
+        ...doc,
+        info: {
+          ...doc.info,
+          personalReviews: [...doc.info.personalReviews, obj]
+        }
+      };
+      LoginUser.findByIdAndUpdate(
+        { _id: req.body._id },
+        updateObj,
+        { new: true },
+        function(err, result) {
+          if (err) {
+            console.log("this is err", err);
+          } else {
+            console.log("this is result", result);
+            res.status(200).send(result);
+          }
+        }
+      );
+    });
 });
 
 //delete a specific review
