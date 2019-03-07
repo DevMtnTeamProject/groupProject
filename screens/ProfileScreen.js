@@ -62,7 +62,7 @@ class ProfileScreen extends Component {
             }}
           >
             <Icon name="ios-add" size={24} />
-            <MyReviews />
+            <Text>My Reviews</Text>
           </TouchableOpacity>
           <Button
             title="Log Out"

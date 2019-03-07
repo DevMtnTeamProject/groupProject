@@ -62,6 +62,16 @@ app.get("/review/:id", (req, res, next) => {
     });
 });
 
+app.get("/get-reviews/:id", (req, res, next) => {
+  const id = req.params.id;
+  Review.findById(id)
+    .exec()
+    .then(doc => {
+      console.log("doc", doc);
+      res.status(200).send(doc);
+    });
+});
+
 //posts review
 app.post("/post-review/", (req, res, next) => {
   const review = new Review({
@@ -81,8 +91,8 @@ app.post("/post-review/", (req, res, next) => {
 
 //add favorites to favorite list
 app.post("/add-favorite/", (req, res, next) => {
-  console.log('this is req.body', req.body)
- 
+  console.log("this is req.body", req.body);
+
   const favObj = {
     addedDate: Date.now(),
     restaurantID: req.body.place_id,
@@ -93,31 +103,29 @@ app.post("/add-favorite/", (req, res, next) => {
   LoginUser.findById(req.body._id)
     .exec()
     .then(_doc => {
-      console.log('this is doc', _doc)
-      const doc = _doc.toObject()
-      const updateObj = 
-      {
+      console.log("this is doc", _doc);
+      const doc = _doc.toObject();
+      const updateObj = {
         ...doc,
         info: {
           ...doc.info,
           favoritesList: [...doc.info.favoritesList, favObj]
         }
-      }
-      
-        LoginUser.findByIdAndUpdate(
-          { _id: req.body._id },
-          updateObj,
-          {new: true},
-          function(err, result) {
-            if (err) {
-              console.log('this is err', err);
-            } else {
-              console.log('this is result', result)
-              res.status(200).send(result)
+      };
 
-            }
+      LoginUser.findByIdAndUpdate(
+        { _id: req.body._id },
+        updateObj,
+        { new: true },
+        function(err, result) {
+          if (err) {
+            console.log("this is err", err);
+          } else {
+            console.log("this is result", result);
+            res.status(200).send(result);
           }
-        );
+        }
+      );
     });
 });
 
