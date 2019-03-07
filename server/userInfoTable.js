@@ -14,7 +14,7 @@ const loginSchema = mongoose.Schema({
         restaurantLocation: String
       }
     ],
-    personalReviews:[{type: Schema.Types.ObjectId, ref: 'Review'}],
+    personalReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
     followers: [
       {
         addedDate: Date,
