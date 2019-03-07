@@ -19,7 +19,6 @@ import { createStackNavigator } from "react-navigation";
 import MarkerDetailsScreen from "./MarkerDetailsScreen";
 import SearchBar from "../components/SearchBar/SearchBar";
 import { googleApiKey } from "../config";
-<<<<<<< HEAD
 
 // TODO add permissions for user location
 
@@ -33,12 +32,6 @@ class HomeScreen extends Component {
       letterSpacing: 3,
     }
 
-=======
-
-class HomeScreen extends Component {
-  static navigationOptions = {
-    header: null
->>>>>>> c317cebd8a56dde02a6f763515af7ad1f4918fee
   };
 
   constructor(props) {

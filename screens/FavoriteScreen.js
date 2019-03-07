@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { StyleSheet, ScrollView, View, Text } from "react-native";
 import ReviewCard from "../components/ReviewCard/ReviewCard";
 import { createStackNavigator } from "react-navigation";
 import colors from '../styles/colors';
@@ -18,16 +18,34 @@ class FavoriteScreen extends Component {
 
   render() {
     return (
-      <View style={{  flexDirection:"row", justifyContent:"flext-start",  }}>
-        <Text></Text>
+      <ScrollView style={styles.container}>
+        {/* <Text></Text> */}
         <ReviewCard />
-      </View>
+        <ReviewCard />
+        <ReviewCard />
+        <ReviewCard />
+      </ScrollView>
     );
   }
 }
 
+
+
 const FavoriteStackNavigator = createStackNavigator({
   Favorites: FavoriteScreen
+});
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    top: 0,
+    right: 0,
+    backgroundColor: colors.eggshell,
+
+
+  },
 });
 
 export default FavoriteStackNavigator;

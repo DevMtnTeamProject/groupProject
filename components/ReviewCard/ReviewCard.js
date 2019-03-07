@@ -37,11 +37,15 @@ export default class ReviewCard extends React.Component {
 
 
             <View style={styles.container}>
-                <SaveButton style={styles.SaveButton}
-                />
+                <SaveButton />
 
-                {/* <View style={styles.displayRestaurant} /> */}
-                {/* <GeneralStarExample ratingObj={ratingObj} style={styles.stars} /> */}
+                <View style={styles.displayRestaurant}>
+                    <Text style={styles.displayRestaurant}>RESTAURANT NAME GOES HERE</Text>
+                </View>
+                <View>
+                    <GeneralStarExample ratingObj={ratingObj} style={styles.stars} />
+                </View>
+
                 {/* <Text style={styles.displayTime}
                     value={this.props.timeSinceReview}
                 /> */}
@@ -66,8 +70,14 @@ export default class ReviewCard extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        backgroundColor: colors.eggshell,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        height: 250,
+        backgroundColor: colors.white,
+        margin: 10,
+
+
 
     },
     title: {
@@ -77,29 +87,29 @@ const styles = StyleSheet.create({
     activeTitle: {
         color: 'red',
     },
-    saveButton: {
-        flexDirection: 'column',
-        backgroundColor: colors.eggshell,
+
+
+    displayRestaurant: {
+
+        flexDirection: 'row',
+        // height: 30,
+        width: 300,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        fontSize: 15,
+        letterSpacing: 3,
+        padding: 8
+
+
+
+    },
+    stars: {
+        flex: 2,
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
-
-    // displayRestaurant: {
-
-    //     // flex: 2,
-    //     backgroundColor: colors.yellow,
-    //     alignItems: 'flex-start',
-    //     justifyContent: 'center',
-
-    // },
-    // stars: {
-    //     flexDirection: 'row',
-    //     backgroundColor: '#fff',
-    //     alignItems: 'flex-start',
-    //     justifyContent: 'center',
-
-    // },
     // displayReview: {
     //     // flex: 5,
     //     backgroundColor: '#fff',

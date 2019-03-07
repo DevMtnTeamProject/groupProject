@@ -26,7 +26,15 @@ export default class SaveButton extends Component {
                     <TouchableOpacity onPress={this._onPressButton}
                         style={this.state.pressStatus ? styles.buttonPress : styles.button}
                     >
-                        <Icon name="ios-close" color={colors.midgrey} size={32} />
+                        <Icon name="ios-close" color={colors.midgrey} size={32} style={{
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: 30,
+                            height: 30,
+                            marginBottom: 3,
+                            marginLeft: 18,
+                        }} />
 
 
                     </TouchableOpacity>
@@ -44,23 +52,28 @@ const styles = StyleSheet.create({
 
 
 
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'baseline',
+        alignItems: 'center',
         height: 30,
         width: 30,
+        marginTop: 15,
+        marginLeft: 5,
+
 
     },
     button: {
 
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'baseline',
+        alignItems: 'center',
         height: 30,
         width: 30,
         borderColor: colors.midgrey,
         borderWidth: 2,
         borderRadius: 50,
+
+
 
 
 
