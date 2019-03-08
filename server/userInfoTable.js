@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const loginSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  fbId: Number,
+  fbId: String,
   lastVisit: String,
   info: {
     userName: String,
@@ -14,18 +14,38 @@ const loginSchema = mongoose.Schema({
         restaurantLocation: String
       }
     ],
-    personalReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+    personalReviews: [
+      {
+        _id: mongoose.Schema.Types.ObjectId,
+        createdOn: Date,
+        fbId: String,
+        info: {
+          userName: String,
+          latLng: {
+            latitude: String,
+            longitude: String
+          },
+          restaurantName: String,
+          address: String,
+          review: String,
+          order: String,
+          avoid: String,
+          restaurantId: String,
+          image: [{ photos: String }]
+        }
+      }
+    ],
     followers: [
       {
         addedDate: Date,
-        fbID: String,
+        fbId: String,
         name: String
       }
     ],
     following: [
       {
         addedDate: Date,
-        fbID: String,
+        fbId: Number,
         name: String
       }
     ]

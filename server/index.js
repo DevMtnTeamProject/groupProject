@@ -32,7 +32,7 @@ app.get("/get-reviews/:restaurantId", (req, res, next) => {
 
 //gets user info
 app.post("/login-user", (req, res, next) => {
-  LoginUser.find({ fbId: req.body.id }, function(err, result) {
+  LoginUser.find({ fbId: req.body.uid }, function(err, result) {
     if (result.length > 0) {
       console.log(result);
       res.status(200).send(result);
@@ -40,7 +40,7 @@ app.post("/login-user", (req, res, next) => {
     } else {
       const createUser = new LoginUser({
         _id: new mongoose.Types.ObjectId(),
-        fbId: req.body.id,
+        fbId: req.body.uid,
         createdOn: Date.now(),
         info: req.body.info
       });
@@ -75,38 +75,56 @@ app.get("/get-reviews/:id", (req, res, next) => {
 
 //posts review
 app.post("/post-review/", (req, res, next) => {
+  console.log('BODY-ODY-ODY' ,req.body)
   const obj = {
-    fbID: req.body.fbID,
+    _id: req.body.id,
     info: req.body.info,
+    userName: req.body.userName,
     createdOn: Date.now()
   };
-  LoginUser.findById(req.body._id)
-    .exec()
-    .then(_doc => {
-      console.log("this is doc", _doc);
-      const doc = _doc.toObject();
-      const updateObj = {
-        ...doc,
-        info: {
-          ...doc.info,
-          personalReviews: [...doc.info.personalReviews, obj]
-        }
-      };
-      LoginUser.findByIdAndUpdate(
-        { _id: req.body._id },
-        updateObj,
-        { new: true },
-        function(err, result) {
-          if (err) {
-            console.log("this is err", err);
-          } else {
-            console.log("this is result", result);
-            res.status(200).send(result);
-          }
-        }
-      );
-    });
+
+  LoginUser.findByIdAndUpdate(
+    obj._id ,
+    { $set: { personalReviews: obj } },
+    function(err, result) {
+      if (err) {
+        console.log("this is err", err);
+      } else {
+        console.log("this is result", result);
+        res.status(200).send(result);
+      }
+    }
+  );
 });
+
+//     .exec()
+//     .then(_doc => {
+//       console.log('this is doc', _doc)
+//       const doc = _doc.toObject()
+//       const updateObj =
+//       {
+//         ...doc,
+//         info: {
+//           ...doc.info,
+//           personalReviews: [...doc.info.personalReviews, obj]
+//         }
+//       }
+//         LoginUser.findOneAndUpdate(
+//           { fbID: req.body.fbID },
+//           updateObj,
+//           {new: true},
+//           function(err, result) {
+//             if (err) {
+//               console.log('this is err', err);
+//             } else {
+//               console.log('this is result', result)
+//               res.status(200).send(result)
+
+//             }
+//           }
+//         );
+//     }).catch(err => console.log(err));
+// });
 
 //delete a specific review
 // app.delete("/:delete-review", (req, res, next) => {
