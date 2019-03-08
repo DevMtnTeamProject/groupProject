@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import * as firebase from "firebase";
-import Icon from "@expo/vector-icons/EvilIcons";
+import Icon from "@expo/vector-icons/Ionicons";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -16,9 +16,13 @@ import HomeStackNavigator from "./screens/HomeScreen";
 import ProfileStackNavigator from "./screens/ProfileScreen";
 import FavoriteStackNavigator from "./screens/FavoriteScreen";
 import connectedFacebookAuth from "./screens/FacebookAuth";
+import colors from "./styles/colors";
 
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
 
 export default class App extends Component {
   render() {
@@ -39,7 +43,7 @@ const AppTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="search" color={tintColor} size={32} />;
+          return <Icon name="ios-search" color={tintColor} size={25} />;
         }
       }
     },
@@ -48,7 +52,7 @@ const AppTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="heart" color={tintColor} size={32} />;
+          return <Icon name="ios-heart" color={tintColor} size={25} />;
         }
       }
     },
@@ -57,7 +61,7 @@ const AppTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: " ",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="user" color={tintColor} size={32} />;
+          return <Icon name="ios-contact" color={tintColor} size={25} />;
         }
       }
     }

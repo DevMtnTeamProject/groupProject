@@ -32,7 +32,7 @@ app.get("/get-reviews/:restaurantId", (req, res, next) => {
 
 //gets user info
 app.post("/login-user", (req, res, next) => {
-  LoginUser.find({ fbId: req.body.id }, function(err, result) {
+  LoginUser.find({ fbId: req.body.uid }, function(err, result) {
     if (result.length > 0) {
       console.log(result);
       res.status(200).send(result);
@@ -40,7 +40,7 @@ app.post("/login-user", (req, res, next) => {
     } else {
       const createUser = new LoginUser({
         _id: new mongoose.Types.ObjectId(),
-        fbId: req.body.id,
+        fbId: req.body.uid,
         createdOn: Date.now(),
         info: req.body.info
       });
@@ -64,16 +64,17 @@ app.get("/review/:id", (req, res, next) => {
 
 //posts review
 app.post("/post-review/", (req, res, next) => {
+  console.log('BODY-ODY-ODY' ,req.body)
   const obj = {
-    
-    fbiD: req.body.fbiD,
+    _id: req.body.id,
     info: req.body.info,
+    userName: req.body.userName,
     createdOn: Date.now()
   };
 
   LoginUser.findByIdAndUpdate(
-    { _id: req.body._id },
-    { $push: { personalReviews: obj } },
+    obj._id ,
+    { $set: { personalReviews: obj } },
     function(err, result) {
       if (err) {
         console.log("this is err", err);

@@ -4,6 +4,7 @@ import { fetchUserLocation } from "../redux/actions";
 import { SafeAreaView, View, Platform } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
+import colors from '../styles/colors'
 
 import { createStackNavigator } from "react-navigation";
 import Map from "../components/Map/Map";
@@ -11,9 +12,18 @@ import MarkerDetailsScreen from "./MarkerDetailsScreen";
 import SearchBar from "../components/SearchBar/SearchBar";
 import { googleApiKey } from "../config";
 
+// TODO add permissions for user location
+
 class HomeScreen extends Component {
   static navigationOptions = {
-    header: null
+    headerTitle: "EXPLORE",
+    headerTintColor: colors.midgrey,
+    headerTitleStyle: {
+      fontWeight: "bold",
+      fontSize: 15,
+      letterSpacing: 3,
+    }
+
   };
 
   constructor(props) {

@@ -10,10 +10,18 @@ import {
   fetchUserFailure
 } from "../redux/actions";
 import NewReviewForm from "../components/NewReviewForm";
+import colors from '../styles/colors';
+
 
 class ProfileScreen extends Component {
   static navigationOptions = {
-    headerTitle: "PROFILE"
+    headerTitle: "PROFILE",
+    headerTintColor: colors.midgrey,
+    headerTitleStyle: {
+      fontWeight: "bold",
+      fontSize: 15,
+      letterSpacing: 3,
+    }
   };
 
   render() {
@@ -74,8 +82,8 @@ class ProfileScreen extends Component {
 const mapStateToProps = state => {
   return {
     id: state.userReducer.user.id,
-    userName: state.userReducer.user.userName,
-    photo: state.userReducer.user.profilePhoto
+    userName: state.userReducer.user.userProfile.userName,
+    photo: state.userReducer.user.userProfile.profilePhoto
   };
 };
 
