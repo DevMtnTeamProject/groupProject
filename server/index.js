@@ -62,6 +62,17 @@ app.get("/review/:id", (req, res, next) => {
     });
 });
 
+//get reviews for user
+app.get("/get-reviews/:id", (req, res, next) => {
+  const id = req.params.id;
+  Review.findById(id)
+    .exec()
+    .then(doc => {
+      console.log("doc", doc);
+      res.status(200).send(doc);
+    });
+});
+
 //posts review
 app.post("/post-review/", (req, res, next) => {
   console.log('BODY-ODY-ODY' ,req.body)

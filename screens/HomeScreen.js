@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchUserLocation } from "../redux/actions";
-import { SafeAreaView, View, Platform } from "react-native";
-
+import { SafeAreaView, View, Platform, Text } from "react-native";
+import Feed from "../components/Feed/Feed";
 import { Constants, Location, Permissions } from "expo";
-import colors from '../styles/colors'
+import colors from "../styles/colors";
 
 import { createStackNavigator } from "react-navigation";
 import Map from "../components/Map/Map";
@@ -21,16 +21,16 @@ class HomeScreen extends Component {
     headerTitleStyle: {
       fontWeight: "bold",
       fontSize: 15,
-      letterSpacing: 3,
+      letterSpacing: 3
     }
-
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: true
+      isLoading: true,
+      expanded: true
     };
   }
 
@@ -63,12 +63,23 @@ class HomeScreen extends Component {
     console.log("this.props.userLocation", this.props.userLocation);
   };
 
+  handleExpanded = () => {
+    console.log("handleExpanded", this.state.expanded);
+    this.setState({ expanded: !this.state.expanded });
+  };
+
   render() {
     console.log("this is props userLocation", this.props.userLocation);
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <Map />
+        <Feed
+          handleExpansion={this.handleExpanded}
+          expanded={this.state.expanded}
+        />
+
+        {/* <Text onPress={this.setState({ expanded: true })}>Trending</Text> */}
         <View>
           <SearchBar userLatLng={this.props.userLocation} />
         </View>

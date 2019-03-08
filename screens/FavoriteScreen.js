@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import ReviewCard from "../components/ReviewCard/ReviewCard";
 import { createStackNavigator } from "react-navigation";
-import colors from '../styles/colors';
+import colors from "../styles/colors";
 
 class FavoriteScreen extends Component {
   static navigationOptions = {
@@ -11,9 +11,8 @@ class FavoriteScreen extends Component {
     headerTitleStyle: {
       fontWeight: "bold",
       fontSize: 15,
-      letterSpacing: 3,
+      letterSpacing: 3
     }
-
   };
 
   render() {
@@ -21,15 +20,11 @@ class FavoriteScreen extends Component {
       <ScrollView style={styles.container}>
         {/* <Text></Text> */}
         <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
+
       </ScrollView>
     );
   }
 }
-
-
 
 const FavoriteStackNavigator = createStackNavigator({
   Favorites: FavoriteScreen
@@ -37,16 +32,14 @@ const FavoriteStackNavigator = createStackNavigator({
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     top: 0,
     right: 0,
     backgroundColor: colors.eggshell,
-    padding: 10,
-
-
-  },
+    padding: 10
+  }
 });
 
 export default FavoriteStackNavigator;
