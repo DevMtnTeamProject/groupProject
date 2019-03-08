@@ -12,16 +12,18 @@ export default class ReviewCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            restaurantName: ['Leave Rochelle Out Of It', '2', '3'],
+            restaurantNames: ['Leave Rochelle Out Of It', 'Carthage Must Be Destroyed', 'Here’s Looking At You', 'The Whale Wins'],
             location: "",
-            review: "",
+            review: "This is a fake review filled with lorem ipsum. The last time you had a cheeseburger was too long ago. Try not to drool when you think about the slightly charred, medium-rare meat nestled between soft brioche, cradled in crisp iceberg lettuce and flavour amplifying condiments. Why are you still reading this- go get a cheeseburger.",
             order: "",
             avoid: "",
             photos: [],
             timeSinceReview: "",//this will be calculated based on the save date of the review post
             profilePic: "",
             ratings: null,
-            reviews: null
+            reviews: null,
+
+
 
 
         }
@@ -38,36 +40,26 @@ export default class ReviewCard extends React.Component {
 
         return (
 
-
-            <View style={styles.container}>
-                <SaveButton />
-
-                <View>
-                    <Text style={styles.displayRestaurant}>{this.state.restaurantName[0]}</Text>
-                </View>
-                <View>
-                    <GeneralStarExample ratingObj={ratingObj} style={styles.stars} />
-                </View>
-
-                {/* <Text style={styles.displayTime}
-                    value={this.props.timeSinceReview}
-                /> */}
-                {/* <Text style={styles.displayDistance}
-                    value={this.props.location}
-                /> */}
-                {/* <Text style={styles.displayReview}
-                    value={this.props.review}
-                /> */}
-                {/* <Text style={styles.displayRecommended}
-                    value={this.props.order}
-                /> */}
-                {/* <Text style={styles.displayAvoid}
-                    value={this.props.avoid}
-                /> */}
-
-
+            <View>
+                {this.state.restaurantNames.length > 0 ? this.state.restaurantNames.map((name) => (
+                    <View style={styles.container}>
+                        <SaveButton />
+                        <View>
+                            <Text style={styles.displayRestaurant}>{name}</Text>
+                        </View>
+                        <View style={styles.stars} >
+                            <GeneralStarExample ratingObj={ratingObj} />
+                        </View>
+                        <Text style={styles.displayReview}>{this.state.review}</Text>
+                    </View>
+                )) : null
+                }
             </View>
-        );
+        )
+
+
+
+
     }
 }
 
@@ -75,7 +67,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         height: 250,
         backgroundColor: colors.white,
         padding: 10,
@@ -97,16 +89,16 @@ const styles = StyleSheet.create({
     displayRestaurant: {
 
         flexDirection: 'row',
-        // height: 30,
-        width: 300,
+        height: 25,
+        width: 350,
         justifyContent: 'space-between',
-        alignItems: 'center',
-        fontSize: 15,
+        alignItems: 'flex-end',
+        fontSize: 18,
         fontWeight: "bold",
         letterSpacing: 1,
-        padding: 0,
+        paddingLeft: 10,
         borderWidth: 0,
-        textAlign: 'right',
+        textAlign: 'left',
         color: colors.warmgrey,
 
 
@@ -115,20 +107,28 @@ const styles = StyleSheet.create({
     },
     stars: {
         flexDirection: 'row',
-        backgroundColor: colors.yellow,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        height: 4,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+        borderWidth: 0,
+        width: 350,
+        padding: 10,
+
+
 
     },
-    // displayReview: {
-    //     // flex: 5,
-    //     backgroundColor: '#fff',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
+    displayReview: {
 
-    // },
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 150,
+        width: 350,
+        borderWidth: 0,
+        paddingLeft: 10,
+        paddingTop: 10,
+        color: colors.warmgrey,
+
+    },
     // displayRecommended: {
     //     // flex: 6,
     //     backgroundColor: '#fff',

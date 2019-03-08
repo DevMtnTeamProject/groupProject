@@ -21,9 +21,7 @@ class FavoriteScreen extends Component {
       <ScrollView style={styles.container}>
         {/* <Text></Text> */}
         <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
+
       </ScrollView>
     );
   }
