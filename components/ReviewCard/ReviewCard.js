@@ -12,7 +12,7 @@ export default class ReviewCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            restaurantName: "",
+            restaurantName: ['Leave Rochelle Out Of It', '2', '3'],
             location: "",
             review: "",
             order: "",
@@ -28,10 +28,13 @@ export default class ReviewCard extends React.Component {
     }
     render() {
 
+
         const ratingObj = {
             ratings: this.props.ratings,
             views: this.props.reviews
         }
+
+
 
         return (
 
@@ -40,7 +43,7 @@ export default class ReviewCard extends React.Component {
                 <SaveButton />
 
                 <View>
-                    <Text style={styles.displayRestaurant}>Restaurant Name Goes Here</Text>
+                    <Text style={styles.displayRestaurant}>{this.state.restaurantName[0]}</Text>
                 </View>
                 <View>
                     <GeneralStarExample ratingObj={ratingObj} style={styles.stars} />
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
         padding: 0,
         borderWidth: 0,
         textAlign: 'right',
+        color: colors.warmgrey,
 
 
 
