@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const reviewSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     createdOn: Date,
-    fbID: String,
+    fbI: String,
     info: {
         review: String,
         order: String,

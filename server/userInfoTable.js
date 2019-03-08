@@ -15,9 +15,8 @@ const loginSchema = mongoose.Schema({
       }
     ],
     personalReviews:[{
-      id: mongoose.Schema.Types.ObjectId,
       createdOn: Date,
-      fbID: String,
+      fbId: Number,
       info: {
           review: String,
           order: String,
@@ -29,14 +28,14 @@ const loginSchema = mongoose.Schema({
     followers: [
       {
         addedDate: Date,
-        fbID: String,
+        fbId: Number,
         name: String
       }
     ],
     following: [
       {
         addedDate: Date,
-        fbID: String,
+        fbId: Number,
         name: String
       }
     ]
