@@ -101,11 +101,7 @@ const mapStateToProps = state => {
   const { userName } = state.userReducer.user;
   const{_id} = state.userReducer.user
   return {
-<<<<<<< HEAD
     id: _id,
-=======
-    _id: id,
->>>>>>> 8eb9303ca9e045bde74799f9a2554584eb40bdad
     userName: userName
   };
 };
