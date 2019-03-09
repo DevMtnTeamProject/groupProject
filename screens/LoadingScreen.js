@@ -34,6 +34,7 @@ class LoadingScreen extends Component {
           })
         })
           .then(data => {
+            console.log(data._bodyInit)
             this.props.fetchUserSuccess({userProfile, ...JSON.parse(data._bodyInit)[0]});
             this.props.navigation.navigate("Home");
           })
