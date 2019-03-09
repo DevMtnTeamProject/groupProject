@@ -4,7 +4,6 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const PORT = 4006;
 
-const Review = require("./reviewTable");
 const LoginUser = require("./userInfoTable");
 
 require("dotenv").config();
@@ -24,11 +23,11 @@ app.use(bodyParser.json());
 mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true });
 
 // gets reviews by restaurantId
-app.get("/get-reviews/:restaurantId", (req, res, next) => {
-  Review.find({ restaurantId: req.params.restaurantId }, function(err, docs) {
-    res.status(200).send(docs);
-  });
-});
+// app.get("/get-reviews/:restaurantId", (req, res, next) => {
+//   Review.find({ restaurantId: req.params.restaurantId }, function(err, docs) {
+//     res.status(200).send(docs);
+//   });
+// });
 
 //gets user info
 app.post("/login-user", (req, res, next) => {
@@ -75,17 +74,17 @@ app.get("/get-reviews/:id", (req, res, next) => {
 
 //posts review
 app.post("/post-review/", (req, res, next) => {
-  console.log('BODY-ODY-ODY' ,req.body)
+  console.log("BODY-ODY-ODY", req.body);
   const obj = {
-    _id: req.body.id,
-    info: req.body.info,
+    fbId: req.body.fbId,
+    info: req.body.info.stateObj,
     userName: req.body.userName,
     createdOn: Date.now()
   };
 
   LoginUser.findByIdAndUpdate(
-    obj._id ,
-    { $set: { personalReviews: obj } },
+     {_id: req.body.id},
+    { $push: { 'info.personalReviews': obj } },
     function(err, result) {
       if (err) {
         console.log("this is err", err);
