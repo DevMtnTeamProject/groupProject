@@ -34,14 +34,17 @@ class LoadingScreen extends Component {
           })
         })
           .then(data => {
-            console.log(data._bodyInit)
-            this.props.fetchUserSuccess({userProfile, ...JSON.parse(data._bodyInit)[0]});
+            console.log(data._bodyInit);
+            this.props.fetchUserSuccess({
+              userProfile,
+              ...JSON.parse(data._bodyInit)[0]
+            });
             this.props.navigation.navigate("Home");
           })
           .catch(err => console.warn("error hitting 4006/login-user: ", err));
         // redirect to home
-        return Promise.resolve({ type: "success" });
         this.props.navigation.navigate("Home");
+        return Promise.resolve({ type: "success" });
       } else {
         this.props.navigation.navigate("UserAuth");
       }
