@@ -34,7 +34,7 @@ class LoadingScreen extends Component {
           })
         })
           .then(data => {
-            console.log(data._bodyInit);
+            console.log("1111111", data._bodyInit[0]);
             this.props.fetchUserSuccess({
               userProfile,
               ...JSON.parse(data._bodyInit)[0]
@@ -43,8 +43,8 @@ class LoadingScreen extends Component {
           })
           .catch(err => console.warn("error hitting 4006/login-user: ", err));
         // redirect to home
-        this.props.navigation.navigate("Home");
         return Promise.resolve({ type: "success" });
+        this.props.navigation.navigate("Home");
       } else {
         this.props.navigation.navigate("UserAuth");
       }

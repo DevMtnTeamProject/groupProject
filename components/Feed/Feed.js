@@ -20,7 +20,7 @@ export default class Feed extends Component {
           //pagingEnabled={true}
           horizontal={true}
           decelerationRate={0}
-          snapToInterval={width - 60}
+          snapToInterval={width - 20}
           snapToAlignment={"center"}
           contentInset={{
             top: 0,
@@ -43,5 +43,5 @@ const styles = StyleSheet.create({
   container: {
     height: 10
   },
-  expanded: { height: 300 }
+  expanded: { height: 250 }
 });

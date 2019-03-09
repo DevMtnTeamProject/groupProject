@@ -95,6 +95,7 @@ class ProfileScreen extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log("What we are looking for", state.userReducer.user);
   return {
     id: state.userReducer.user.id,
     userName: state.userReducer.user.userProfile.userName,
