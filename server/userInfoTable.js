@@ -14,18 +14,38 @@ const loginSchema = mongoose.Schema({
         restaurantLocation: String
       }
     ],
-    personalReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+    personalReviews: 
+      [{ 
+        createdOn: Date,
+        fbId: Number,
+        info: {
+          userName: String,
+          latLng: {
+            latitude: String,
+            longitude: String
+          },
+          restaurantName: String,
+          address: String,
+          review: String,
+          order: String,
+          avoid: String,
+          restaurantId: String,
+          image: [{ photos: String }]
+        }
+      }
+    ]
+    ,
     followers: [
       {
         addedDate: Date,
-        fbID: String,
+        fbId: Number,
         name: String
       }
     ],
     following: [
       {
         addedDate: Date,
-        fbID: String,
+        fbId: Number,
         name: String
       }
     ]

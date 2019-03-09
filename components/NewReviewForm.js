@@ -28,18 +28,18 @@ class NewReviewForm extends Component {
   // geocode address before saving to database
   // save to db & clear inputs
   onSaveReview = async () => {
-    const { authorId, userName } = this.props;
+    const { fbId, id, userName } = this.props;
+    const stateObj = this.state
     await fetch(`http://${IP}:4006/post-review/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        info: { ...this.state, fbID: this.props._id, userName }
-      })
+      body: JSON.stringify({ fbId, id, info: {stateObj}, userName })
     })
       .then(response => {
         console.log("save review response", response);
       })
       .catch(error => {
+        console.log(this.props.id)
         console.log("error saving new review", error);
       });
   };
@@ -98,10 +98,13 @@ class NewReviewForm extends Component {
 }
 
 const mapStateToProps = state => {
-  const { id, userName } = state.userReducer.user;
+  const { userName } = state.userReducer.user;
+  const{_id} = state.userReducer.user;
+  const {fbId} = state.userReducer.user;
   return {
-    _id: id,
-    userName: userName
+    id: _id,
+    userName: userName,
+    fbId: fbId
   };
 };
 
