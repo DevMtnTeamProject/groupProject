@@ -10,7 +10,7 @@ import { createStackNavigator } from "react-navigation";
 import Map from "../components/Map/Map";
 import MarkerDetailsScreen from "./MarkerDetailsScreen";
 import SearchBar from "../components/SearchBar/SearchBar";
-import { googleApiKey } from "../config";
+import { IP, googleApiKey } from "../config";
 
 // TODO add permissions for user location
 
@@ -69,8 +69,6 @@ class HomeScreen extends Component {
   };
 
   render() {
-    console.log("this is props userLocation", this.props.userLocation);
-
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <Map />
@@ -89,7 +87,8 @@ class HomeScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-    userLocation: state.mapReducer.userLatLng
+    userLocation: state.mapReducer.userLatLng,
+    userProfile: state.userReducer.user
   };
 };
 const mapActionsToProps = {

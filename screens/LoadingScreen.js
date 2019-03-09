@@ -43,8 +43,8 @@ class LoadingScreen extends Component {
           })
           .catch(err => console.warn("error hitting 4006/login-user: ", err));
         // redirect to home
-        this.props.navigation.navigate("Home");
-        return Promise.resolve({ type: "success" });
+        // this.props.fetchUserSuccess((userProfile))
+        // return Promise.resolve({ type: "success" });
       } else {
         this.props.navigation.navigate("UserAuth");
       }

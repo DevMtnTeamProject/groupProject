@@ -32,6 +32,7 @@ mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true });
 //gets user info
 app.post("/login-user", (req, res, next) => {
   LoginUser.find({ fbId: req.body.uid }, function(err, result) {
+    if (err) console.warn("error loggin in: ", err);
     if (result.length > 0) {
       console.log(result);
       res.status(200).send(result);
@@ -83,8 +84,8 @@ app.post("/post-review/", (req, res, next) => {
   };
 
   LoginUser.findByIdAndUpdate(
-     {_id: req.body.id},
-    { $push: { 'info.personalReviews': obj } },
+    { _id: req.body.id },
+    { $push: { "info.personalReviews": obj } },
     function(err, result) {
       if (err) {
         console.log("this is err", err);
