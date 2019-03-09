@@ -29,11 +29,12 @@ class NewReviewForm extends Component {
         latitude: "",
         longitude: ""
       },
-      address: "",
+      location: "",
       review: "",
       order: "",
       avoid: "",
-      photos: []
+      photos: [],
+      place_id: ""
     };
   }
 
@@ -82,35 +83,18 @@ class NewReviewForm extends Component {
     }
   };
   onSaveReview = async () => {
-    const { id, userName } = this.props;
-    const {
-      restaurantName,
-      restaurantId,
-      address,
-      review,
-      order,
-      avoid
-    } = this.state;
+    const { fbId, id, userName } = this.props;
+    const stateObj = this.state;
     await fetch(`http://${IP}:4006/post-review/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        info: {
-          id,
-          userName,
-          restaurantName,
-          restaurantId,
-          address,
-          review,
-          order,
-          avoid
-        }
-      })
+      body: JSON.stringify({ fbId, id, info: { stateObj }, userName })
     })
       .then(response => {
         console.log("save review response", response);
       })
       .catch(error => {
+        console.log(this.props.id);
         console.log("error saving new review", error);
       });
   };
@@ -195,12 +179,13 @@ class NewReviewForm extends Component {
 }
 
 const mapStateToProps = state => {
-  const { _id, userName } = state.userReducer.user;
+  const { _id, userName, fbId } = state.userReducer.user;
   const { userLatLng } = state.mapReducer;
+
   return {
     id: _id,
-    userName,
-    userLatLng
+    userName: userName,
+    fbId: fbId
   };
 };
 

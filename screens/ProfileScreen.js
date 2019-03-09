@@ -10,8 +10,10 @@ import {
   fetchUserFailure
 } from "../redux/actions";
 import NewReviewForm from "../components/NewReviewForm";
-import colors from '../styles/colors';
 
+import MyReviews from "./MyReviews";
+
+import colors from "../styles/colors";
 
 class ProfileScreen extends Component {
   static navigationOptions = {
@@ -20,7 +22,7 @@ class ProfileScreen extends Component {
     headerTitleStyle: {
       fontWeight: "bold",
       fontSize: 15,
-      letterSpacing: 3,
+      letterSpacing: 3
     }
   };
 
@@ -58,6 +60,19 @@ class ProfileScreen extends Component {
             <Icon name="ios-add" size={24} />
             <Text style={{ marginLeft: 7 }}>Write A Review</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("MyReviews")}
+            style={{
+              width: 200,
+              flexDirection: "row",
+              fontSize: 12,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Icon name="ios-add" size={24} />
+            <Text>My Reviews</Text>
+          </TouchableOpacity>
           <Button
             title="Log Out"
             onPress={() =>
@@ -82,8 +97,8 @@ class ProfileScreen extends Component {
 const mapStateToProps = state => {
   return {
     id: state.userReducer.user.id,
-    userName: state.userReducer.user.userName,
-    photo: state.userReducer.user.profilePhoto
+    userName: state.userReducer.user.userProfile.userName,
+    photo: state.userReducer.user.userProfile.profilePhoto
   };
 };
 
@@ -100,7 +115,8 @@ const connectedProfileScreen = connect(
 
 const ProfileStackNavigator = createStackNavigator({
   Profile: connectedProfileScreen,
-  NewReview: NewReviewForm
+  NewReview: NewReviewForm,
+  MyReviews: MyReviews
 });
 
 export default ProfileStackNavigator;
