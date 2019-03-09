@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "native-test-app",
-    "slug": "native-test-app",
+    "name": "Plated-app",
+    "slug": "Plated-app",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "facebookAppId": "2051924541563103",
@@ -19,7 +19,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.plated-app.plated"
+    },
+    "android": {
+      "package": "com.plated-app.plated"
     },
     "description": ""
   }
